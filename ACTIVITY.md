@@ -1,9 +1,9 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-01-31 23:30
-**Tasks Completed:** 2 / 18
-**Current Task:** F1.3 - Data Models (SwiftData)
+**Last Updated:** 2026-01-31 23:45
+**Tasks Completed:** 3 / 18
+**Current Task:** F1.4 - Navigation Structure
 
 ---
 
@@ -30,6 +30,33 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-01-31 23:45
+**Completed:**
+- F1.3 - Data Models (SwiftData)
+
+**Changes Made:**
+- Created Person.swift (id, name, relationship, avatarRef, notes, moments/media relationships)
+- Created Moment.swift (id, personId, date, recurring, categoryId, title, notes, media relationship)
+- Created Category.swift (id, name, colorToken, icon, isSystem + seed data for 5 categories)
+- Created Media.swift (id, personId?, momentId?, localIdentifier, type)
+- Created CollageProject.swift (id, templateId, momentId?, assets[], captionDrafts[])
+- Created ReminderSetting.swift (id, offsets, quietHours, enabled)
+- Created ModelTests.swift with 14 unit tests for all models
+
+**Status:**
+- All 4 verification steps pass
+- All 14 model tests pass
+- Project builds without warnings
+- PR #3 merged to main
+
+**Next:**
+- F1.4 - Navigation Structure
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-01-31 23:30
 **Completed:**

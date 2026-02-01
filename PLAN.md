@@ -55,7 +55,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   2. Relationships are properly configured (Person ↔ Moment, Moment ↔ Media)
   3. Models persist and retrieve correctly in unit tests
   4. Category has default seed data (birthday, anniversary, milestone, memorial, justBecause)
-- **passes:** false
+- **passes:** true
 
 #### F1.4 - Navigation Structure
 - **Category:** Foundation

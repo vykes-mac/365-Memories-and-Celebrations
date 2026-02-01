@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(sudo *)",
+      "Bash(docker *)",
+      "Bash(docker-compose *)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ],
+    "allow": [
+      "WebFetch(domain:www.anthropic.com)",
+      "WebFetch(domain:*)",
+      "Bash(gemini:*)",
+      "Bash(curl:*)",
+      "Bash(git:*)",
+      "Bash(xcodebuild *)",
+      "Bash(gh *)"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "excludedCommands": []
+  }
+}

@@ -46,7 +46,7 @@ After completing each task, add an entry below in this format:
 - F2.3 - Day Details Sheet
 
 **Blockers:**
-- None
+- `git push` failed (no network/remote access), so PR/merge not completed
 
 ---
 

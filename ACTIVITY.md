@@ -1,8 +1,8 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 15:41
-**Tasks Completed:** 13 / 18
+**Last Updated:** 2026-02-01 15:43
+**Tasks Completed:** 14 / 18
 **Current Task:** None (ready for next task)
 
 ---
@@ -30,6 +30,26 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-02-01 15:43
+**Completed:**
+- F5.2 - Contacts Import
+
+**Changes Made:**
+- Added ContactsImportService and ContactsImportView with selection preview
+- Wired onboarding import action to contacts import flow
+- Marked F5.2 as passing in PLAN.md
+
+**Status:**
+- Contacts import handles permission, preview, selection, and moment creation
+
+**Next:**
+- F6.1 - Animations & Haptics
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-02-01 15:41
 **Completed:**

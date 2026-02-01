@@ -13,6 +13,8 @@ struct OnboardingFlow: View {
     @State private var step: Step = .welcome
     @State private var didTrackStart = false
     @State private var showingAddMoment = false
+    @State private var showingContactsImport = false
+    @State private var showingCalendarImport = false
     @State private var prefillName: String = ""
     @State private var prefillRelationship: String = ""
     @AppStorage("selectedTheme") private var selectedTheme: String = Theme.softBlush.rawValue
@@ -44,6 +46,12 @@ struct OnboardingFlow: View {
         }
         .sheet(isPresented: $showingAddMoment) {
             AddMomentFlow(initialDate: Date(), initialName: prefillName, initialRelationship: prefillRelationship)
+        }
+        .sheet(isPresented: $showingContactsImport) {
+            ContactsImportView()
+        }
+        .alert("Calendar import is coming soon.", isPresented: $showingCalendarImport) {
+            Button("OK", role: .cancel) {}
         }
         .onAppear {
             if !didTrackStart {
@@ -105,6 +113,7 @@ struct OnboardingFlow: View {
 
             Button(action: {
                 AnalyticsService.shared.track("import_contacts_tapped")
+                showingContactsImport = true
             }) {
                 OnboardingActionCard(
                     title: "Import from Contacts",
@@ -114,7 +123,7 @@ struct OnboardingFlow: View {
             }
             .buttonStyle(.plain)
 
-            Button(action: {}) {
+            Button(action: { showingCalendarImport = true }) {
                 OnboardingActionCard(
                     title: "Import from Calendar",
                     subtitle: "Add upcoming celebrations",

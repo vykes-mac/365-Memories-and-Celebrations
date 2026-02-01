@@ -252,7 +252,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   4. User can select/deselect individual contacts
   5. Import creates Person + Moment for each selected
   6. Handles contacts without birthdays gracefully
-- **passes:** false
+- **passes:** true
 
 ---
 

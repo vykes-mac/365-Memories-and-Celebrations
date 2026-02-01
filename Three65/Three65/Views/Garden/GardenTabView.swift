@@ -12,10 +12,12 @@ import SwiftData
 struct GardenTabView: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel = GardenViewModel()
+    @State private var showingAddMoment = false
+    @State private var addMomentDate = Date()
 
     var body: some View {
         NavigationStack {
-            ZStack {
+            ZStack(alignment: .bottomTrailing) {
                 // Background gradient
                 LinearGradient(
                     colors: [Theme.current.colors.bgGradientA, Theme.current.colors.bgGradientB],
@@ -53,22 +55,60 @@ struct GardenTabView: View {
                         }
                     }
                 }
+
+                floatingAddButton
             }
             .navigationTitle("Garden")
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $viewModel.showingDayDetail) {
                 if let selectedDay = viewModel.selectedDay {
-                    DayDetailSheet(day: selectedDay) {
-                        viewModel.dismissDayDetail()
-                    }
+                    DayDetailSheet(
+                        day: selectedDay,
+                        onDismiss: {
+                            viewModel.dismissDayDetail()
+                        },
+                        onAddMoment: { date in
+                            viewModel.dismissDayDetail()
+                            presentAddMoment(for: date)
+                        }
+                    )
                     .presentationDetents([.medium, .large])
                     .presentationDragIndicator(.hidden)
+                }
+            }
+            .sheet(isPresented: $showingAddMoment) {
+                AddMomentFlow(initialDate: addMomentDate) {
+                    viewModel.loadDays()
                 }
             }
         }
         .onAppear {
             viewModel.setModelContext(modelContext)
         }
+    }
+
+    private var floatingAddButton: some View {
+        Button(action: {
+            presentAddMoment(for: Date())
+        }) {
+            Image(systemName: "plus")
+                .font(.system(size: 22, weight: .semibold))
+                .foregroundStyle(.white)
+                .frame(width: 56, height: 56)
+                .background(
+                    Circle()
+                        .fill(Theme.current.colors.accentPrimary)
+                )
+                .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
+        }
+        .padding(.trailing, Spacing.screenHorizontal)
+        .padding(.bottom, Spacing.xl)
+        .accessibilityLabel("Add moment")
+    }
+
+    private func presentAddMoment(for date: Date) {
+        addMomentDate = date
+        showingAddMoment = true
     }
 }
 

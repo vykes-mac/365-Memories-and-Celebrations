@@ -240,7 +240,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   7. Completes to Garden view
   8. Analytics event `onboarding_started` fires at start
   9. Analytics event `import_contacts_tapped` fires if contacts import used
-- **passes:** false
+- **passes:** true
 
 #### F5.2 - Contacts Import
 - **Category:** Onboarding

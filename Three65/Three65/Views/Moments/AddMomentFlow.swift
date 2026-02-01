@@ -26,9 +26,11 @@ struct AddMomentFlow: View {
     @State private var showingError: Bool = false
     @State private var errorMessage: String = ""
 
-    init(initialDate: Date = Date(), onSave: (() -> Void)? = nil) {
+    init(initialDate: Date = Date(), initialName: String? = nil, initialRelationship: String? = nil, onSave: (() -> Void)? = nil) {
         self.onSave = onSave
         _date = State(initialValue: initialDate)
+        _name = State(initialValue: initialName ?? "")
+        _relationship = State(initialValue: initialRelationship ?? "")
     }
 
     var body: some View {

@@ -1,8 +1,8 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 15:37
-**Tasks Completed:** 12 / 18
+**Last Updated:** 2026-02-01 15:41
+**Tasks Completed:** 13 / 18
 **Current Task:** None (ready for next task)
 
 ---
@@ -30,6 +30,27 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-02-01 15:41
+**Completed:**
+- F5.1 - Welcome Flow
+
+**Changes Made:**
+- Added onboarding flow with welcome, import, theme, moments, and notification steps
+- Wired first-launch gating in app root with onboarding completion
+- Added guided moment creation buttons and notification permission request
+- Marked F5.1 as passing in PLAN.md
+
+**Status:**
+- Onboarding shows on first launch only and completes to Garden
+
+**Next:**
+- F5.2 - Contacts Import
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-02-01 15:37
 **Completed:**

@@ -13,3 +13,7 @@ For each new feature:
 - Update local main from the remote again before starting the next feature.
 
 If you are blocked, explain exactly what you need and stop.
+
+When all tasks are marked as passing, output exactly COMPLETE.
+
+--max-iterations 20 --complete-promise COMPLETE

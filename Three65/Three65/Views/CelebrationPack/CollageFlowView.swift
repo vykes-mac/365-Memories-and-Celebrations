@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CollageFlowView: View {
     @Environment(\.dismiss) private var dismiss

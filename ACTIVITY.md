@@ -1,8 +1,8 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 15:48
-**Tasks Completed:** 15 / 18
+**Last Updated:** 2026-02-01 15:50
+**Tasks Completed:** 16 / 18
 **Current Task:** None (ready for next task)
 
 ---
@@ -30,6 +30,27 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-02-01 15:50
+**Completed:**
+- F6.2 - Accessibility
+
+**Changes Made:**
+- Updated typography to use Dynamic Type text styles
+- Added category labels to moments for non-color indicators
+- Improved upcoming event glow behavior with reduce-motion compliance
+- Marked F6.2 as passing in PLAN.md
+
+**Status:**
+- Text scales with Dynamic Type and VoiceOver cues are more explicit
+
+**Next:**
+- F6.3 - Offline Support
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-02-01 15:48
 **Completed:**

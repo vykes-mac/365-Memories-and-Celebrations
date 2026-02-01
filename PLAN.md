@@ -279,7 +279,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   3. Color is never the sole indicator (icons + labels accompany colors)
   4. VoiceOver reads all interactive elements correctly
   5. Reduce Motion disables animations while keeping fades
-- **passes:** false
+- **passes:** true
 
 #### F6.3 - Offline Support
 - **Category:** Reliability

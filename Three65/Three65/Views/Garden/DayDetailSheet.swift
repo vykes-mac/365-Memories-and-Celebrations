@@ -273,6 +273,10 @@ struct MomentRow: View {
                             .font(Typography.caption)
                             .foregroundStyle(Theme.current.colors.textSecondary)
                     }
+
+                    Text(categoryName)
+                        .font(Typography.micro)
+                        .foregroundStyle(Theme.current.colors.textTertiary)
                 }
 
                 Spacer()
@@ -308,6 +312,17 @@ struct MomentRow: View {
         case "memorial": return ThemeColors.categoryMemorial
         case "justBecause": return ThemeColors.categoryJustBecause
         default: return Theme.current.colors.accentPrimary
+        }
+    }
+
+    private var categoryName: String {
+        switch moment.categoryId {
+        case "birthday": return "Birthday"
+        case "anniversary": return "Anniversary"
+        case "milestone": return "Milestone"
+        case "memorial": return "Memorial"
+        case "justBecause": return "Just Because"
+        default: return "Moment"
         }
     }
 

@@ -15,30 +15,30 @@ enum Typography {
     /// Display styles for hero and screen titles (serif)
     enum Display {
         /// 34-36pt hero titles
-        static let large = Font.system(size: 35, weight: .bold, design: .serif)
+        static let large = Font.system(.largeTitle, design: .serif).weight(.bold)
         /// 28-30pt screen titles
-        static let medium = Font.system(size: 29, weight: .semibold, design: .serif)
+        static let medium = Font.system(.title, design: .serif).weight(.semibold)
     }
 
     /// Title styles for sections and cards (serif)
     enum Title {
         /// 22-24pt section titles
-        static let large = Font.system(size: 23, weight: .semibold, design: .serif)
+        static let large = Font.system(.title2, design: .serif).weight(.semibold)
         /// 18-20pt card titles
-        static let medium = Font.system(size: 19, weight: .medium, design: .serif)
+        static let medium = Font.system(.title3, design: .serif).weight(.medium)
     }
 
     /// Body text (sans-serif)
-    static let body = Font.system(size: 17, weight: .regular, design: .default)
+    static let body = Font.system(.body, design: .default)
 
     /// Caption text (sans-serif)
-    static let caption = Font.system(size: 13, weight: .regular, design: .default)
+    static let caption = Font.system(.caption, design: .default)
 
     /// Micro text for badges only (sans-serif)
-    static let micro = Font.system(size: 11, weight: .medium, design: .default)
+    static let micro = Font.system(.caption2, design: .default).weight(.medium)
 
     /// Button label text (sans-serif, medium weight)
-    static let button = Font.system(size: 17, weight: .medium, design: .default)
+    static let button = Font.system(.headline, design: .default).weight(.medium)
 }
 
 // MARK: - Spacing (8pt Grid)

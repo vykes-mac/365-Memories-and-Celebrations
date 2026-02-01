@@ -47,6 +47,7 @@ After completing each task, add an entry below in this format:
 
 **Blockers:**
 - `git push` failed (no network/remote access), so PR/merge not completed
+- `gh auth status` shows invalid token; `gh repo view` cannot reach api.github.com
 
 ---
 

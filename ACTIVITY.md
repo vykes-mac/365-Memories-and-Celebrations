@@ -31,6 +31,24 @@ After completing each task, add an entry below in this format:
 ---
 -->
 
+### 2026-02-01 12:24
+**Completed:**
+- Updated workflow instructions in PROMPT.md to commit directly to main
+
+**Changes Made:**
+- Adjusted feature workflow to remove branch/PR steps
+
+**Status:**
+- PROMPT.md now aligns with direct-to-main workflow
+
+**Next:**
+- F3.2 - Collage Generator
+
+**Blockers:**
+- None
+
+---
+
 ### 2026-02-01 00:37
 **Completed:**
 - F2.2 branch sync (push + PR merge)

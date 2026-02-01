@@ -5,10 +5,9 @@ Start every iteration by opening PLAN.md. Select exactly one task to work on and
 Update ACTIVITY.md with your progress as you go (what you changed, why, and what is next). Keep it short and factual.
 
 For each new feature:
-- Make sure local main is updated from the remote before branching.
-- Create a new feature branch before making changes.
+- Make sure local main is updated from the remote before starting.
 - Implement the feature and update any relevant docs/tests.
 - Run the test suite only if you have added tests. Run UI tests only if you have added UI tests.
-- Push the branch, create a PR, and merge it.
+- Commit directly to main and push.
 
 When ALL tasks have `"passes": true` output: <promises>COMPLETE</promises>.

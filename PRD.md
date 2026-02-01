@@ -72,7 +72,7 @@ Women who are the “memory keepers” in families/friend groups:
 ## 5) Key Differentiators
 
 1. **365 Garden** as the signature identity (emotional year-view)
-2. **Glassmorphism aesthetic** (soft, premium feel)
+2. **Liquid glass aesthetic** (SwiftUI default materials) + metal shader background (subtle animation)
 3. **Celebration Pack** (collage/video + captions + schedule)
 4. Relationship context (labels like “Mom”, “Best Friend”) informs suggestions
 

@@ -12,13 +12,7 @@ Before starting work, run these commands to understand current state:
 # 1. Check recent git history
 git log --oneline -20
 
-# 2. Build the project to verify it compiles
-xcodebuild -project Three65/Three65.xcodeproj -scheme Three65 -configuration Debug build
-
-# 3. Run tests to verify baseline
-xcodebuild -project Three65/Three65.xcodeproj -scheme Three65 test -destination 'platform=iOS Simulator,name=iPhone 16'
-
-# 4. Review this file's Activity Log section for recent work. ACTIVITY.md
+# 2. Review this file's Activity Log section for recent work. ACTIVITY.md
 ```
 
 ---
@@ -26,6 +20,9 @@ xcodebuild -project Three65/Three65.xcodeproj -scheme Three65 test -destination 
 ## Feature List
 
 Each feature includes verification steps. **Do not remove or edit existing verification steps.** Mark `passes: true` only when all verification steps succeed.
+
+### Terminology Update
+- In this plan, “glass” refers to **SwiftUI liquid glass materials**. Do not simulate glass effects with custom blur layers.
 
 ### Phase 1: Foundation
 
@@ -40,13 +37,14 @@ Each feature includes verification steps. **Do not remove or edit existing verif
 
 #### F1.2 - Design System Implementation
 - **Category:** Foundation
-- **Description:** Implement design tokens from DESIGN_SYSTEM.md including colors, typography, spacing, and glass effects
+- **Description:** Implement design tokens from DESIGN_SYSTEM.md including colors, typography, spacing, and liquid glass materials
 - **Verification Steps:**
   1. Theme enum exists with cases: softBlush, moonlight, warmLinen, garden
   2. Color tokens are accessible via `Theme.current.colors.bgBase`, etc.
   3. Typography styles match spec (display, title, body, caption scales)
   4. GlassCard and GlassSheet view modifiers render blur + fill correctly
   5. Spacing constants follow 8pt grid
+- **Note:** GlassCard/GlassSheet should wrap SwiftUI liquid glass materials; avoid custom blur simulation.
 - **passes:** false
 
 #### F1.3 - Data Models (SwiftData)
@@ -388,7 +386,8 @@ Three65/
 2. **Garden must render at 60fps** - use lazy loading and efficient diffing
 3. **Notifications must handle DST/timezone** - store events in local time
 4. **Photos remain on-device by default** - respect privacy
-5. **Maintain AA contrast on glass surfaces** - accessibility requirement
+5. **Maintain AA contrast on liquid glass surfaces** - accessibility requirement
+6. **Metal shader background on all screens** - theme-driven with subtle animation; reduce for Reduce Motion
 
 ---
 

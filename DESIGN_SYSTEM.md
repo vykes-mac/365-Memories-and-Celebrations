@@ -1,4 +1,4 @@
-# 365: Birthdays & Anniversaries — iOS Design System (Glassmorphism)
+# 365: Birthdays & Anniversaries — iOS Design System (Liquid Glass)
 
 > Purpose: Define a **cohesive, emotional, soft** visual + interaction system for *365*.  
 
@@ -12,7 +12,7 @@
 - **Memory-first:** photos and relationships feel central, not secondary.
 
 ### Visual principles
-- **Glassmorphism everywhere (tastefully):** frosted layers over soft backgrounds.
+- **Liquid glass by default (SwiftUI):** use system materials; avoid custom glass simulation.
 - **Soft geometry:** rounded corners, pill controls, circular avatars, friendly spacing.
 - **Quiet-to-celebratory range:** calm baseline; delight is reserved for meaningful moments.
 
@@ -37,8 +37,10 @@
 > Implementation note: each theme provides a *Background*, *Accent*, *Secondary Accent*, and *Category colors*.
 
 ### Core Background Recipe (all themes)
+- **Global metal shader background on every screen** (behind all content).
+- Shader palette shifts per theme; keep structure consistent to avoid visual jump.
+- Subtle, slow animation (drift/shift) always on; reduce for Reduce Motion.
 - Base background: **near-white** with a **very subtle gradient** (2–6% shift).
-- Background should be subtle gradient created with metal shader with subtle animation.
 - Decorative “glow blobs”: faint radial gradients behind primary content areas.
 - Avoid harsh contrast: keep large areas low-saturation.
 
@@ -75,29 +77,28 @@ These are **starting points** for exploration (tune in design):
 
 ---
 
-## 3) Glassmorphism Specification (Foundation)
+## 3) Liquid Glass (SwiftUI default materials)
 
-### Glass Surface Token Set
+### Material Usage
+- Use SwiftUI’s built-in liquid glass materials; **do not simulate glass effects** with custom blur layers.
+- Prefer system components (TabView, sheets, NavigationStack) which already render liquid glass in iOS 26.
+
+### Surface Types
 Use **two** main surface types:
-1. **Glass.Card** (most surfaces)
-   - Blur: **18–28**
-   - Fill: `rgba(255,255,255,0.55)` (light themes)
-   - Stroke: `rgba(255,255,255,0.40)` top highlight
-   - Shadow: subtle, wide, low-opacity
-2. **Glass.Sheet** (bottom sheets / modals)
-   - Blur: **28–40**
-   - Fill: `rgba(255,255,255,0.72)`
-   - Stroke: `rgba(255,255,255,0.50)`
-   - Shadow: slightly stronger than cards
+1. **LiquidGlass.Card** (most surfaces)
+   - Material: `.ultraThinMaterial` (default)
+   - Optional overlay/stroke tokens only for contrast or theme tint.
+2. **LiquidGlass.Sheet** (bottom sheets / modals)
+   - Material: `.thinMaterial` or `.regularMaterial` based on contrast
+   - Optional overlay/stroke tokens only for separation.
 
-### Lighting & Depth
-- **Top highlight**: 1px inner stroke, brighter at top-left.
-- **Edge shadow**: soft drop shadow + tiny ambient shadow.
-- **No hard borders**: use hairline strokes + blur separation.
+### Depth & Separation
+- Let system materials handle highlights; add only subtle shadow if needed.
+- Avoid heavy borders; use hairline strokes sparingly.
 
-### Content on glass
-- Text on glass must maintain **AA contrast**.
-- Avoid stacking too many glass layers; keep to **max 3** visible layers.
+### Content on liquid glass
+- Text on liquid glass must maintain **AA contrast**.
+- Avoid stacking too many material layers; keep to **max 3** visible layers.
 
 ---
 
@@ -162,7 +163,7 @@ Use **two** main surface types:
 
 ### Illustration
 - Use warm, diverse, inclusive illustration sets.
-- Keep illustration backgrounds minimal so glass UI remains dominant.
+- Keep illustration backgrounds minimal so liquid glass UI remains dominant.
 
 ---
 
@@ -171,7 +172,7 @@ Use **two** main surface types:
 ### Motion rules
 - Duration: 180–320ms
 - Easing: iOS standard (ease-in-out, spring for sheets)
-- Use blur transitions when presenting glass sheets.
+- Use standard sheet transitions; avoid custom blur animations.
 
 ### Delight moments
 - **Confetti** only on: “Moment completed”, “Shared”, “Big anniversary”
@@ -188,9 +189,9 @@ Use **two** main surface types:
 ## 8) Core Components
 
 ### 8.1 Navigation
-**Tab bar** (glass)
+**Tab bar** (liquid glass)
 - Tabs: Garden / Calendar / Create / Library / Profile
-- Glass fill + blur; active tab uses accent dot + label color.
+- Liquid glass material; active tab uses accent dot + label color.
 
 **Top bar**
 - Year selector (e.g., “2026”)
@@ -222,7 +223,7 @@ Use **two** main surface types:
 - Avatar + name + occasion
 - Date label + countdown badge (“7 days”)
 - Primary action: “Plan” / “Share” / “Message”
-- Glass card + category ring on leading edge.
+- Liquid glass card + category ring on leading edge.
 
 **Person Card**
 - Large avatar, relationship label
@@ -231,7 +232,7 @@ Use **two** main surface types:
 ---
 
 ### 8.4 Chips & Pills
-- Category chip: icon + label, glass fill
+- Category chip: icon + label, liquid glass fill
 - Selected: stronger fill + subtle glow + checkmark
 - Use for filters and quick add.
 
@@ -244,18 +245,18 @@ Use **two** main surface types:
 - Label: short, warm verbs (“Start my 365”, “Save this moment”)
 
 **Secondary Button**
-- Glass outline, no gradient
+- Liquid glass outline, no gradient
 - For “Skip”, “Later”, “View all”
 
 **Floating Action Button**
-- Circular glass with plus icon
+- Circular liquid glass with plus icon
 - Soft shadow and blur behind.
 
 ---
 
 ### 8.6 Inputs
 **Text field**
-- Glass inset surface
+- Liquid glass inset surface
 - Placeholder tone: warm (“e.g., Sarah”)
 - Validation: gentle (“Add a date to continue”)
 
@@ -264,7 +265,7 @@ Use **two** main surface types:
 
 ---
 
-### 8.7 Bottom Sheets (Glass.Sheet)
+### 8.7 Bottom Sheets (LiquidGlass.Sheet)
 Used for:
 - Day details
 - Add moment
@@ -281,7 +282,7 @@ Sheet sections:
 ### 8.8 Media & Collage
 **Media strip**
 - Rounded thumbnails, 10–12pt radius
-- “+ Add” tile uses glass.
+- “+ Add” tile uses liquid glass.
 
 **Collage templates**
 - Polaroid stack
@@ -295,7 +296,7 @@ Sheet sections:
 ## 9) States & Feedback
 
 ### Loading
-- Skeleton shimmer on glass cards
+- Skeleton shimmer on liquid glass cards
 - “Preparing your share pack…” with calm animation
 
 ### Empty states
@@ -314,6 +315,7 @@ Sheet sections:
 - Color is never the only indicator:
   - Rings + icons + labels for categories
 - Reduce Motion: disable shimmer/confetti, keep fades.
+- Reduce Motion: pause or greatly soften metal shader background animation.
 - Ensure tap targets ≥ 44pt.
 
 ---
@@ -322,7 +324,7 @@ Sheet sections:
 
 ### Colors
 - `bg.base`, `bg.gradientA`, `bg.gradientB`
-- `glass.card.fill`, `glass.card.stroke`, `glass.sheet.fill`, `glass.sheet.stroke`
+- `glass.card.fill`, `glass.card.stroke`, `glass.sheet.fill`, `glass.sheet.stroke` (liquid glass overlays)
 - `accent.primary`, `accent.secondary`
 - `text.primary`, `text.secondary`, `text.tertiary`
 

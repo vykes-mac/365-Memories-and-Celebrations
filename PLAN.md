@@ -130,7 +130,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   3. Can edit person details (name, relationship, notes)
   4. Can attach/remove avatar photo
   5. Deleting person prompts confirmation and removes linked moments
-- **passes:** false
+- **passes:** true
 
 ---
 

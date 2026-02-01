@@ -1,8 +1,8 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 15:33
-**Tasks Completed:** 10 / 18
+**Last Updated:** 2026-02-01 15:36
+**Tasks Completed:** 11 / 18
 **Current Task:** None (ready for next task)
 
 ---
@@ -30,6 +30,27 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-02-01 15:36
+**Completed:**
+- F4.2 - Theme Selection
+
+**Changes Made:**
+- Added ThemePickerView with previews and selection persistence
+- Wired Profile settings to theme picker and analytics tracking
+- Updated MainTabView to observe theme selection for live updates
+- Marked F4.2 as passing in PLAN.md
+
+**Status:**
+- Theme selection applies immediately and persists across launches
+
+**Next:**
+- F4.3 - Profile & Settings Screen
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-02-01 15:33
 **Completed:**

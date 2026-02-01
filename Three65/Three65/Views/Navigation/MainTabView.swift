@@ -51,6 +51,11 @@ enum AppTab: String, CaseIterable, Identifiable {
 /// Main tab-based navigation view
 struct MainTabView: View {
     @State private var selectedTab: AppTab = .garden
+    @AppStorage("selectedTheme") private var selectedTheme: String = Theme.softBlush.rawValue
+
+    private var currentTheme: Theme {
+        Theme(rawValue: selectedTheme) ?? .softBlush
+    }
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -84,7 +89,7 @@ struct MainTabView: View {
                 }
                 .tag(AppTab.profile)
         }
-        .tint(Theme.current.colors.accentPrimary)
+        .tint(currentTheme.colors.accentPrimary)
         // Glass effect for tab bar using SwiftUI material
         .toolbarBackground(.ultraThinMaterial, for: .tabBar)
         .toolbarBackground(.visible, for: .tabBar)

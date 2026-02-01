@@ -105,6 +105,17 @@ struct ProfileTabView: View {
                 )
             }
             .buttonStyle(.plain)
+
+            NavigationLink {
+                ThemePickerView()
+            } label: {
+                SettingsRow(
+                    title: "Theme",
+                    subtitle: "Pick your color mood",
+                    systemImage: "paintpalette"
+                )
+            }
+            .buttonStyle(.plain)
         }
     }
 }

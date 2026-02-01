@@ -210,7 +210,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   3. Theme persists across app launches
   4. All screens respect current theme colors
   5. Analytics event `theme_selected` fires on change
-- **passes:** false
+- **passes:** true
 
 #### F4.3 - Profile & Settings Screen
 - **Category:** Settings

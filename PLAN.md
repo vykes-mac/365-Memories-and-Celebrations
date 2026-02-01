@@ -161,7 +161,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   6. Saved collages appear in Creative Library
   7. Analytics event `celebration_pack_started` fires on entry
   8. Analytics event `celebration_pack_exported` fires on export
-- **passes:** false
+- **passes:** true
 
 #### F3.3 - Caption Suggestions
 - **Category:** Celebration Pack

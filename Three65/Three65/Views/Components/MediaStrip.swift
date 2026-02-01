@@ -7,7 +7,6 @@
 
 import SwiftUI
 import PhotosUI
-import Photos
 import UIKit
 
 /// Horizontal media strip with add, reorder, and delete support
@@ -148,24 +147,7 @@ private struct MediaThumbnailView: View {
     }
 
     private func loadThumbnail() async -> UIImage? {
-        let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: [media.localIdentifier], options: nil)
-        guard let asset = fetchResult.firstObject else { return nil }
-
-        return await withCheckedContinuation { continuation in
-            let targetSize = CGSize(width: 120, height: 120)
-            let options = PHImageRequestOptions()
-            options.isSynchronous = false
-            options.deliveryMode = .opportunistic
-
-            PHImageManager.default().requestImage(
-                for: asset,
-                targetSize: targetSize,
-                contentMode: .aspectFill,
-                options: options
-            ) { image, _ in
-                continuation.resume(returning: image)
-            }
-        }
+        PhotoAssetLoader.loadImage(localIdentifier: media.localIdentifier, targetSize: CGSize(width: 120, height: 120))
     }
 }
 

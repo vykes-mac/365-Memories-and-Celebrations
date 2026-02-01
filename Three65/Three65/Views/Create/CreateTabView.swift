@@ -9,6 +9,8 @@ import SwiftUI
 
 /// Create tab - celebration pack creation hub
 struct CreateTabView: View {
+    @State private var showingCollageFlow = false
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -23,25 +25,40 @@ struct CreateTabView: View {
                 VStack(spacing: Spacing.m) {
                     GlassCard {
                         VStack(spacing: Spacing.xs) {
-                            Image(systemName: "plus.circle.fill")
+                            Image(systemName: "sparkles")
                                 .font(.system(size: 48))
                                 .foregroundStyle(Theme.current.colors.accentPrimary)
 
-                            Text("Create")
+                            Text("Create Celebration Pack")
                                 .font(Typography.Title.large)
                                 .foregroundStyle(Theme.current.colors.textPrimary)
 
-                            Text("Make celebration packs")
+                            Text("Turn memories into shareable collages")
                                 .font(Typography.caption)
                                 .foregroundStyle(Theme.current.colors.textSecondary)
                         }
                         .frame(maxWidth: .infinity)
+                    }
+
+                    Button(action: { showingCollageFlow = true }) {
+                        Text("Start a Collage")
+                            .font(Typography.button)
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, Spacing.m)
+                            .background(
+                                RoundedRectangle(cornerRadius: Radius.m)
+                                    .fill(Theme.current.colors.accentPrimary)
+                            )
                     }
                 }
                 .padding(Spacing.screenHorizontal)
             }
             .navigationTitle("Create")
             .navigationBarTitleDisplayMode(.large)
+            .sheet(isPresented: $showingCollageFlow) {
+                CollageFlowView()
+            }
         }
     }
 }

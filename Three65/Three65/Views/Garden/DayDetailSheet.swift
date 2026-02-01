@@ -13,6 +13,7 @@ struct DayDetailSheet: View {
     let day: GardenDay
     let onDismiss: () -> Void
     let onAddMoment: (Date) -> Void
+    @State private var showingCollageFlow = false
 
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -45,6 +46,9 @@ struct DayDetailSheet: View {
         .padding(.bottom, Spacing.xl)
         .frame(maxWidth: .infinity)
         .glassSheet(cornerRadius: Radius.l)
+        .sheet(isPresented: $showingCollageFlow) {
+            CollageFlowView(person: day.moments.first?.person, moment: day.moments.first)
+        }
     }
 
     // MARK: - Subviews
@@ -172,7 +176,7 @@ struct DayDetailSheet: View {
 
     private var celebrationCTA: some View {
         Button(action: {
-            // TODO: Trigger celebration pack flow
+            showingCollageFlow = true
         }) {
             HStack(spacing: Spacing.s) {
                 Image(systemName: "sparkles")

@@ -1,8 +1,8 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 00:59
-**Tasks Completed:** 6 / 18
+**Last Updated:** 2026-02-01 15:21
+**Tasks Completed:** 7 / 18
 **Current Task:** None (ready for next task)
 
 ---
@@ -30,6 +30,29 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-02-01 15:21
+**Completed:**
+- F3.2 - Collage Generator
+
+**Changes Made:**
+- Added collage flow (template picker, photo selection, editor, export/share) and supporting view model
+- Added photo asset loader utility and collage preview layouts
+- Wired Create tab and Day Detail sheet to launch celebration pack flow
+- Added Creative Library grid for saved collages and set app-wide model container
+- Marked F3.2 as passing in PLAN.md
+
+**Status:**
+- Collage templates, photo selection, rendering, export sizes, and story format all available
+- Collages save and display in Library; analytics events fire on start/export
+
+**Next:**
+- F3.3 - Caption Suggestions
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-02-01 12:24
 **Completed:**

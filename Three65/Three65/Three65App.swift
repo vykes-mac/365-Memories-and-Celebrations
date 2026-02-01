@@ -11,7 +11,7 @@ import SwiftUI
 struct Three65App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainTabView()
         }
     }
 }

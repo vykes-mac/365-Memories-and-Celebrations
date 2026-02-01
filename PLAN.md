@@ -62,7 +62,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
 - **Description:** Implement tab-based navigation with 5 tabs: Garden, Calendar, Create, Library, Profile
 - **Verification Steps:**
   1. TabView renders with 5 tabs and correct icons
-  2. Tab bar uses glass effect per design system
+  2. Tab bar uses liquid glass effect per design system
   3. Each tab navigates to its root view
   4. Active tab shows accent color indicator
 - **passes:** false

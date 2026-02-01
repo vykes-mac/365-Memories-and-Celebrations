@@ -120,8 +120,6 @@ final class GardenViewModel: BaseViewModel {
         let today = calendar.startOfDay(for: Date())
 
         while currentDate <= endOfYear {
-            let dayStart = calendar.startOfDay(for: currentDate)
-
             // Find moments for this day
             let dayMoments = yearMoments.filter { moment in
                 if moment.recurring {

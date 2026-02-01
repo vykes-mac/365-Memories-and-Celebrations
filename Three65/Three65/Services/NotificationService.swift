@@ -25,7 +25,7 @@ final class NotificationService {
 
     func clearAll() async {
         let center = UNUserNotificationCenter.current()
-        await center.removeAllPendingNotificationRequests()
+        center.removeAllPendingNotificationRequests()
     }
 
     func scheduleReminders(for moments: [Moment], settings: ReminderSetting) async {
@@ -35,7 +35,7 @@ final class NotificationService {
         }
 
         let center = UNUserNotificationCenter.current()
-        await center.removeAllPendingNotificationRequests()
+        center.removeAllPendingNotificationRequests()
 
         let calendar = Calendar.autoupdatingCurrent
         let now = Date()

@@ -1,9 +1,9 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 15:52
+**Last Updated:** 2026-02-01 16:04
 **Tasks Completed:** 18 / 18
-**Current Task:** None (ready for next task)
+**Current Task:** None (build clean-up)
 
 ---
 
@@ -42,6 +42,25 @@ After completing each task, add an entry below in this format:
 
 **Status:**
 - Core flows remain usable offline with sync messaging when online
+
+**Next:**
+- None
+
+**Blockers:**
+- None
+
+---
+
+### 2026-02-01 16:04
+**Completed:**
+- Fix build errors (imports + warnings)
+
+**Changes Made:**
+- Added missing SwiftData/Combine imports to unblock builds
+- Removed unused `dayStart` and cleaned reminder scheduling awaits
+
+**Status:**
+- App builds with only the AppIntents metadata warning
 
 **Next:**
 - None

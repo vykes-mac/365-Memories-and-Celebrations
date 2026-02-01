@@ -1,9 +1,9 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-01-31 23:45
-**Tasks Completed:** 3 / 18
-**Current Task:** F1.4 - Navigation Structure
+**Last Updated:** 2026-01-31 23:55
+**Tasks Completed:** 4 / 18
+**Current Task:** F2.1 - 365 Garden View (Dot Mode)
 
 ---
 
@@ -30,6 +30,33 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-01-31 23:55
+**Completed:**
+- F1.4 - Navigation Structure
+
+**Changes Made:**
+- Created MainTabView.swift (AppTab enum, MainTabView with 5 tabs)
+- Created GardenTabView.swift (placeholder Garden tab)
+- Created CalendarTabView.swift (placeholder Calendar tab)
+- Created CreateTabView.swift (placeholder Create tab)
+- Created LibraryTabView.swift (placeholder Library tab)
+- Created ProfileTabView.swift (placeholder Profile tab)
+- Updated Three65App.swift to use MainTabView
+
+**Status:**
+- All 4 verification steps pass
+- Tab bar uses SwiftUI material for glass effect
+- Project builds without warnings
+- PR #4 merged to main
+
+**Next:**
+- F2.1 - 365 Garden View (Dot Mode)
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-01-31 23:45
 **Completed:**

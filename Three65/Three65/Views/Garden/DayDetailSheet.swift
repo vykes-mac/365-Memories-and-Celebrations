@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 /// Bottom sheet showing details for a selected day
 struct DayDetailSheet: View {
@@ -102,17 +103,10 @@ struct DayDetailSheet: View {
                 .font(Typography.Title.medium)
                 .foregroundStyle(Theme.current.colors.textPrimary)
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: Spacing.s) {
-                    if mediaItems.isEmpty {
-                        MediaPlaceholderTile()
-                    } else {
-                        ForEach(mediaItems, id: \.id) { item in
-                            MediaThumbnail(media: item)
-                        }
-                    }
-                }
-                .padding(.vertical, Spacing.xxs)
+            if mediaItems.isEmpty {
+                MediaPlaceholderTile()
+            } else {
+                MediaPreviewStrip(mediaItems: mediaItems)
             }
         }
     }
@@ -231,35 +225,46 @@ struct DayDetailSheet: View {
 
 /// A single row displaying a moment in the day detail sheet
 struct MomentRow: View {
+    @Environment(\.modelContext) private var modelContext
     let moment: Moment
 
     var body: some View {
-        HStack(spacing: Spacing.s) {
-            // Category indicator
-            Circle()
-                .fill(categoryColor)
-                .frame(width: 12, height: 12)
+        VStack(alignment: .leading, spacing: Spacing.s) {
+            HStack(spacing: Spacing.s) {
+                // Category indicator
+                Circle()
+                    .fill(categoryColor)
+                    .frame(width: 12, height: 12)
 
-            VStack(alignment: .leading, spacing: Spacing.xxs) {
-                Text(moment.title)
-                    .font(Typography.body)
-                    .foregroundStyle(Theme.current.colors.textPrimary)
+                VStack(alignment: .leading, spacing: Spacing.xxs) {
+                    Text(moment.title)
+                        .font(Typography.body)
+                        .foregroundStyle(Theme.current.colors.textPrimary)
 
-                if let personName = moment.person?.name {
-                    Text(personName)
-                        .font(Typography.caption)
-                        .foregroundStyle(Theme.current.colors.textSecondary)
+                    if let personName = moment.person?.name {
+                        Text(personName)
+                            .font(Typography.caption)
+                            .foregroundStyle(Theme.current.colors.textSecondary)
+                    }
+                }
+
+                Spacer()
+
+                // Recurring indicator
+                if moment.recurring {
+                    Image(systemName: "repeat")
+                        .font(.system(size: 12))
+                        .foregroundStyle(Theme.current.colors.textTertiary)
                 }
             }
 
-            Spacer()
-
-            // Recurring indicator
-            if moment.recurring {
-                Image(systemName: "repeat")
-                    .font(.system(size: 12))
-                    .foregroundStyle(Theme.current.colors.textTertiary)
-            }
+            MediaStrip(
+                title: nil,
+                mediaItems: sortedMedia,
+                onAdd: addMediaItems,
+                onDelete: deleteMedia,
+                onMove: moveMedia
+            )
         }
         .padding(Spacing.cardPaddingCompact)
         .background(
@@ -276,6 +281,54 @@ struct MomentRow: View {
         case "memorial": return ThemeColors.categoryMemorial
         case "justBecause": return ThemeColors.categoryJustBecause
         default: return Theme.current.colors.accentPrimary
+        }
+    }
+
+    private var sortedMedia: [Media] {
+        (moment.media ?? []).sorted { $0.sortOrder < $1.sortOrder }
+    }
+
+    private func addMediaItems(_ items: [PhotosPickerItem]) {
+        Task {
+            let startingOrder = sortedMedia.count
+            var order = startingOrder
+
+            for item in items {
+                guard let identifier = item.itemIdentifier else { continue }
+                let isVideo = item.supportedContentTypes.contains { $0.conforms(to: .movie) }
+                let media = Media(
+                    moment: moment,
+                    localIdentifier: identifier,
+                    type: isVideo ? .video : .photo,
+                    sortOrder: order
+                )
+                modelContext.insert(media)
+                order += 1
+            }
+
+            saveChanges()
+        }
+    }
+
+    private func deleteMedia(_ media: Media) {
+        modelContext.delete(media)
+        saveChanges()
+    }
+
+    private func moveMedia(from source: IndexSet, to destination: Int) {
+        var items = sortedMedia
+        items.move(fromOffsets: source, toOffset: destination)
+        for (index, item) in items.enumerated() {
+            item.sortOrder = index
+        }
+        saveChanges()
+    }
+
+    private func saveChanges() {
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save media changes: \(error.localizedDescription)")
         }
     }
 }
@@ -323,23 +376,6 @@ struct MediaPlaceholderTile: View {
                 .foregroundStyle(Theme.current.colors.textTertiary)
             )
             .accessibilityLabel("No media attached")
-    }
-}
-
-/// Media thumbnail placeholder for photos and videos
-struct MediaThumbnail: View {
-    let media: Media
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: Radius.s)
-            .fill(Theme.current.colors.glassCardFill)
-            .frame(width: 72, height: 72)
-            .overlay(
-                Image(systemName: media.type == .video ? "play.circle.fill" : "photo.fill")
-                    .font(.system(size: 20))
-                    .foregroundStyle(Theme.current.colors.textSecondary)
-            )
-            .accessibilityLabel(media.type == .video ? "Video preview" : "Photo preview")
     }
 }
 

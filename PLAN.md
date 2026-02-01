@@ -221,7 +221,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   3. Notification preferences accessible
   4. Quiet hours configuration
   5. Data/backup options visible (iCloud toggle if implemented)
-- **passes:** false
+- **passes:** true
 
 ---
 

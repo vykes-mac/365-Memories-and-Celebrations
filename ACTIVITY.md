@@ -1,8 +1,8 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 15:36
-**Tasks Completed:** 11 / 18
+**Last Updated:** 2026-02-01 15:37
+**Tasks Completed:** 12 / 18
 **Current Task:** None (ready for next task)
 
 ---
@@ -30,6 +30,26 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-02-01 15:37
+**Completed:**
+- F4.3 - Profile & Settings Screen
+
+**Changes Made:**
+- Added Data & Backup view with iCloud sync toggle placeholder
+- Linked Profile settings to data/backup options
+- Marked F4.3 as passing in PLAN.md
+
+**Status:**
+- Profile tab now exposes theme, reminder, and data/backup settings
+
+**Next:**
+- F5.1 - Welcome Flow
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-02-01 15:36
 **Completed:**

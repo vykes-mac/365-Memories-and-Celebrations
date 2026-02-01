@@ -116,6 +116,17 @@ struct ProfileTabView: View {
                 )
             }
             .buttonStyle(.plain)
+
+            NavigationLink {
+                DataBackupView()
+            } label: {
+                SettingsRow(
+                    title: "Data & Backup",
+                    subtitle: "Sync and export options",
+                    systemImage: "icloud.and.arrow.up"
+                )
+            }
+            .buttonStyle(.plain)
         }
     }
 }

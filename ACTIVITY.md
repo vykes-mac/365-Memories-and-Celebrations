@@ -1,7 +1,7 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 00:53
+**Last Updated:** 2026-02-01 00:58
 **Tasks Completed:** 6 / 18
 **Current Task:** None (ready for next task)
 
@@ -166,6 +166,27 @@ After completing each task, add an entry below in this format:
 
 **Next:**
 - F3.1 - Media Attachment
+
+**Blockers:**
+- None
+
+---
+
+### 2026-02-01 00:58
+**Completed:**
+- F3.1 - Media Attachment
+
+**Changes Made:**
+- Added MediaStrip component with add/reorder/delete support and thumbnail loading
+- Wired media attachment to people and moments via Photo Picker
+- Updated DayDetailSheet to preview attached media
+- Marked F3.1 as passing in PLAN.md
+
+**Status:**
+- All 7 verification steps pass
+
+**Next:**
+- F3.2 - Collage Generator
 
 **Blockers:**
 - None

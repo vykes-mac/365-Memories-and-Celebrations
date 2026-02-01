@@ -33,6 +33,7 @@ struct PersonDetailView: View {
             ScrollView {
                 VStack(spacing: Spacing.l) {
                     avatarSection
+                    mediaSection
                     detailsSection
                     notesSection
                     deleteSection
@@ -126,6 +127,16 @@ struct PersonDetailView: View {
         }
     }
 
+    private var mediaSection: some View {
+        MediaStrip(
+            title: "Media",
+            mediaItems: sortedMedia,
+            onAdd: addMediaItems,
+            onDelete: deleteMedia,
+            onMove: moveMedia
+        )
+    }
+
     private var notesSection: some View {
         GlassCard {
             VStack(alignment: .leading, spacing: Spacing.m) {
@@ -210,6 +221,46 @@ struct PersonDetailView: View {
         modelContext.delete(person)
         saveChanges()
         dismiss()
+    }
+
+    private var sortedMedia: [Media] {
+        (person.media ?? []).sorted { $0.sortOrder < $1.sortOrder }
+    }
+
+    private func addMediaItems(_ items: [PhotosPickerItem]) {
+        Task {
+            let startingOrder = sortedMedia.count
+            var order = startingOrder
+
+            for item in items {
+                guard let identifier = item.itemIdentifier else { continue }
+                let isVideo = item.supportedContentTypes.contains { $0.conforms(to: .movie) }
+                let media = Media(
+                    person: person,
+                    localIdentifier: identifier,
+                    type: isVideo ? .video : .photo,
+                    sortOrder: order
+                )
+                modelContext.insert(media)
+                order += 1
+            }
+
+            saveChanges()
+        }
+    }
+
+    private func deleteMedia(_ media: Media) {
+        modelContext.delete(media)
+        saveChanges()
+    }
+
+    private func moveMedia(from source: IndexSet, to destination: Int) {
+        var items = sortedMedia
+        items.move(fromOffsets: source, toOffset: destination)
+        for (index, item) in items.enumerated() {
+            item.sortOrder = index
+        }
+        saveChanges()
     }
 }
 

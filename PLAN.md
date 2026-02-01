@@ -147,7 +147,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   5. Can reorder attached media
   6. Can delete attached media
   7. Media operations don't block UI (async loading)
-- **passes:** false
+- **passes:** true
 
 #### F3.2 - Collage Generator
 - **Category:** Celebration Pack

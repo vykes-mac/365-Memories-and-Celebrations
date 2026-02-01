@@ -183,7 +183,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   3. Can re-share from library
   4. Can delete from library
   5. Empty state shows helpful CTA
-- **passes:** false
+- **passes:** true
 
 ---
 

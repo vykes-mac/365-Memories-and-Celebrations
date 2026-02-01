@@ -11,6 +11,7 @@ import UIKit
 
 struct CreativeLibraryView: View {
     @Query(sort: \CollageProject.modifiedAt, order: .reverse) private var projects: [CollageProject]
+    @State private var showingCollageFlow = false
 
     private let columns = [GridItem(.flexible(), spacing: Spacing.m), GridItem(.flexible(), spacing: Spacing.m)]
 
@@ -30,17 +31,25 @@ struct CreativeLibraryView: View {
                         .foregroundStyle(Theme.current.colors.textPrimary)
 
                     if projects.isEmpty {
-                        EmptyLibraryState()
+                        EmptyLibraryState(onCreate: { showingCollageFlow = true })
                     } else {
                         LazyVGrid(columns: columns, spacing: Spacing.m) {
                             ForEach(projects, id: \.id) { project in
-                                CollageLibraryCard(project: project)
+                                NavigationLink {
+                                    CollageDetailView(project: project)
+                                } label: {
+                                    CollageLibraryCard(project: project)
+                                }
+                                .buttonStyle(.plain)
                             }
                         }
                     }
                 }
                 .padding(Spacing.screenHorizontal)
             }
+        }
+        .sheet(isPresented: $showingCollageFlow) {
+            CollageFlowView()
         }
     }
 }
@@ -86,6 +95,8 @@ private struct CollageLibraryCard: View {
 }
 
 private struct EmptyLibraryState: View {
+    let onCreate: () -> Void
+
     var body: some View {
         GlassCard {
             VStack(spacing: Spacing.s) {
@@ -101,6 +112,18 @@ private struct EmptyLibraryState: View {
                     .font(Typography.caption)
                     .foregroundStyle(Theme.current.colors.textSecondary)
                     .multilineTextAlignment(.center)
+
+                Button(action: onCreate) {
+                    Text("Start a Collage")
+                        .font(Typography.caption)
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, Spacing.m)
+                        .padding(.vertical, Spacing.xs)
+                        .background(
+                            Capsule()
+                                .fill(Theme.current.colors.accentPrimary)
+                        )
+                }
             }
             .frame(maxWidth: .infinity)
             .padding(Spacing.l)

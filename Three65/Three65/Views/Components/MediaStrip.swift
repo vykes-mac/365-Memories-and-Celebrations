@@ -147,7 +147,7 @@ private struct MediaThumbnailView: View {
     }
 
     private func loadThumbnail() async -> UIImage? {
-        PhotoAssetLoader.loadImage(localIdentifier: media.localIdentifier, targetSize: CGSize(width: 120, height: 120))
+        await PhotoAssetLoader.loadImage(localIdentifier: media.localIdentifier, targetSize: CGSize(width: 120, height: 120))
     }
 }
 

@@ -1,9 +1,9 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-01-31 22:55
-**Tasks Completed:** 1 / 18
-**Current Task:** F1.2 - Design System Implementation
+**Last Updated:** 2026-01-31 23:30
+**Tasks Completed:** 2 / 18
+**Current Task:** F1.3 - Data Models (SwiftData)
 
 ---
 
@@ -30,6 +30,31 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-01-31 23:30
+**Completed:**
+- F1.2 - Design System Implementation
+
+**Changes Made:**
+- Created Three65/Three65/Utilities/Theme.swift (Theme enum, ThemeColors with all 4 themes)
+- Created Three65/Three65/Utilities/DesignTokens.swift (Typography, Spacing, Radius, Blur, Duration, Elevation)
+- Created Three65/Three65/Views/Components/GlassCard.swift (GlassCardModifier, GlassCard view)
+- Created Three65/Three65/Views/Components/GlassSheet.swift (GlassSheetModifier, GlassSheet view)
+- Removed .gitkeep files from directories now containing Swift files
+
+**Status:**
+- All 5 verification steps pass
+- Project builds without warnings
+- All tests pass
+- PR #2 merged to main
+
+**Next:**
+- F1.3 - Data Models (SwiftData)
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-01-31 22:55
 **Completed:**

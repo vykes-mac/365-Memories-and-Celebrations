@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 /// Garden tab - 365 year-at-a-glance view
 struct GardenTabView: View {
+    @Environment(\.modelContext) private var modelContext
+    @StateObject private var viewModel = GardenViewModel()
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -20,32 +24,41 @@ struct GardenTabView: View {
                 )
                 .ignoresSafeArea()
 
-                VStack(spacing: Spacing.m) {
-                    GlassCard {
-                        VStack(spacing: Spacing.xs) {
-                            Image(systemName: "circle.grid.3x3.fill")
-                                .font(.system(size: 48))
-                                .foregroundStyle(Theme.current.colors.accentPrimary)
+                VStack(spacing: 0) {
+                    // Year switcher header
+                    YearSwitcher(
+                        selectedYear: $viewModel.selectedYear,
+                        onPrevious: viewModel.previousYear,
+                        onNext: viewModel.nextYear,
+                        onGoToCurrent: viewModel.goToCurrentYear
+                    )
+                    .padding(.horizontal, Spacing.screenHorizontal)
 
-                            Text("365 Garden")
-                                .font(Typography.Title.large)
-                                .foregroundStyle(Theme.current.colors.textPrimary)
-
-                            Text("Your year at a glance")
-                                .font(Typography.caption)
-                                .foregroundStyle(Theme.current.colors.textSecondary)
-                        }
-                        .frame(maxWidth: .infinity)
+                    // Dot grid
+                    DotGridView(viewModel: viewModel) { day in
+                        viewModel.selectDay(day)
                     }
                 }
-                .padding(Spacing.screenHorizontal)
             }
             .navigationTitle("Garden")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $viewModel.showingDayDetail) {
+                if let selectedDay = viewModel.selectedDay {
+                    DayDetailSheet(day: selectedDay) {
+                        viewModel.dismissDayDetail()
+                    }
+                    .presentationDetents([.medium, .large])
+                    .presentationDragIndicator(.hidden)
+                }
+            }
+        }
+        .onAppear {
+            viewModel.setModelContext(modelContext)
         }
     }
 }
 
 #Preview {
     GardenTabView()
+        .modelContainer(for: [Person.self, Moment.self, Category.self, Media.self, CollageProject.self, ReminderSetting.self], inMemory: true)
 }

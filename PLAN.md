@@ -82,7 +82,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   5. Year switcher allows changing displayed year
   6. Tapping a dot triggers day details sheet
   7. Renders at 60fps on iPhone 12 and newer
-- **passes:** false
+- **passes:** true
 
 #### F2.2 - 365 Garden View (Heatmap Mode)
 - **Category:** Garden

@@ -11,6 +11,7 @@ import SwiftUI
 struct DayDetailSheet: View {
     let day: GardenDay
     let onDismiss: () -> Void
+    let onAddMoment: (Date) -> Void
 
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -118,9 +119,26 @@ struct DayDetailSheet: View {
 
     private var momentsSection: some View {
         VStack(alignment: .leading, spacing: Spacing.s) {
-            Text("Moments")
-                .font(Typography.Title.medium)
-                .foregroundStyle(Theme.current.colors.textPrimary)
+            HStack {
+                Text("Moments")
+                    .font(Typography.Title.medium)
+                    .foregroundStyle(Theme.current.colors.textPrimary)
+
+                Spacer()
+
+                Button(action: { onAddMoment(day.date) }) {
+                    Text("Add moment")
+                        .font(Typography.caption)
+                        .foregroundStyle(Theme.current.colors.accentPrimary)
+                        .padding(.horizontal, Spacing.s)
+                        .padding(.vertical, Spacing.xxs)
+                        .background(
+                            Capsule()
+                                .fill(Theme.current.colors.accentPrimary.opacity(0.15))
+                        )
+                }
+                .accessibilityLabel("Add moment")
+            }
 
             LazyVStack(spacing: Spacing.s) {
                 ForEach(day.moments, id: \.id) { moment in
@@ -141,7 +159,7 @@ struct DayDetailSheet: View {
                 .foregroundStyle(Theme.current.colors.textSecondary)
 
             Button(action: {
-                // TODO: Trigger add moment flow
+                onAddMoment(day.date)
             }) {
                 Text("Add a moment")
                     .font(Typography.button)
@@ -343,6 +361,7 @@ struct MediaThumbnail: View {
             isToday: true,
             moments: [moment]
         ),
-        onDismiss: {}
+        onDismiss: {},
+        onAddMoment: { _ in }
     )
 }

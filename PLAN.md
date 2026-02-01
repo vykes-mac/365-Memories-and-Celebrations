@@ -119,7 +119,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   6. Save persists moment to SwiftData
   7. New moment appears on Garden immediately
   8. Analytics event `moment_created` fires on save
-- **passes:** false
+- **passes:** true
 
 #### F2.5 - Person Management
 - **Category:** People

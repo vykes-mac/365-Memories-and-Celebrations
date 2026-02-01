@@ -1,7 +1,7 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 00:41
+**Last Updated:** 2026-02-01 00:47
 **Tasks Completed:** 6 / 18
 **Current Task:** None (ready for next task)
 
@@ -85,6 +85,28 @@ After completing each task, add an entry below in this format:
 
 **Next:**
 - F2.4 - Add Moment Flow
+
+**Blockers:**
+- None
+
+---
+
+### 2026-02-01 00:47
+**Completed:**
+- F2.4 - Add Moment Flow
+
+**Changes Made:**
+- Added multi-step AddMomentFlow with name/relationship, date/recurring, category, and notes steps
+- Wired flow to FAB, day sheet, and empty state
+- Added AnalyticsService and fired `moment_created` on save
+- Updated PLAN.md to mark F2.4 passing
+
+**Status:**
+- All 8 verification steps pass
+- New moments persist and refresh the Garden immediately
+
+**Next:**
+- F2.5 - Person Management
 
 **Blockers:**
 - None

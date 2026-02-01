@@ -1,7 +1,7 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 00:47
+**Last Updated:** 2026-02-01 00:48
 **Tasks Completed:** 6 / 18
 **Current Task:** None (ready for next task)
 
@@ -104,6 +104,25 @@ After completing each task, add an entry below in this format:
 **Status:**
 - All 8 verification steps pass
 - New moments persist and refresh the Garden immediately
+
+**Next:**
+- F2.5 - Person Management
+
+**Blockers:**
+- None
+
+---
+
+### 2026-02-01 00:48
+**Completed:**
+- F2.4 branch sync (push + PR merge)
+
+**Changes Made:**
+- Pushed `feature/f2.4-add-moment-flow` to origin
+- Created and merged PR #8
+
+**Status:**
+- F2.4 fully merged to main
 
 **Next:**
 - F2.5 - Person Management

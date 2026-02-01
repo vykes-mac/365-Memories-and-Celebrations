@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DataBackupView: View {
     @AppStorage("iCloudSyncEnabled") private var iCloudSyncEnabled = false
+    @StateObject private var networkMonitor = NetworkMonitor.shared
 
     var body: some View {
         ZStack {
@@ -29,6 +30,14 @@ struct DataBackupView: View {
 
                             Toggle("iCloud Sync", isOn: $iCloudSyncEnabled)
                                 .tint(Theme.current.colors.accentPrimary)
+
+                            if iCloudSyncEnabled {
+                                Text(networkMonitor.isConnected
+                                    ? "Sync is enabled and will keep your data up to date."
+                                    : "Offline. Changes will sync when you're back online.")
+                                    .font(Typography.caption)
+                                    .foregroundStyle(Theme.current.colors.textSecondary)
+                            }
 
                             Text("Keep your moments safe across devices.")
                                 .font(Typography.caption)

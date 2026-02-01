@@ -52,47 +52,54 @@ enum AppTab: String, CaseIterable, Identifiable {
 struct MainTabView: View {
     @State private var selectedTab: AppTab = .garden
     @AppStorage("selectedTheme") private var selectedTheme: String = Theme.softBlush.rawValue
+    @StateObject private var networkMonitor = NetworkMonitor.shared
 
     private var currentTheme: Theme {
         Theme(rawValue: selectedTheme) ?? .softBlush
     }
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            GardenTabView()
-                .tabItem {
-                    Label(AppTab.garden.title, systemImage: selectedTab == .garden ? AppTab.garden.selectedIcon : AppTab.garden.icon)
-                }
-                .tag(AppTab.garden)
+        ZStack(alignment: .top) {
+            TabView(selection: $selectedTab) {
+                GardenTabView()
+                    .tabItem {
+                        Label(AppTab.garden.title, systemImage: selectedTab == .garden ? AppTab.garden.selectedIcon : AppTab.garden.icon)
+                    }
+                    .tag(AppTab.garden)
 
-            CalendarTabView()
-                .tabItem {
-                    Label(AppTab.calendar.title, systemImage: selectedTab == .calendar ? AppTab.calendar.selectedIcon : AppTab.calendar.icon)
-                }
-                .tag(AppTab.calendar)
+                CalendarTabView()
+                    .tabItem {
+                        Label(AppTab.calendar.title, systemImage: selectedTab == .calendar ? AppTab.calendar.selectedIcon : AppTab.calendar.icon)
+                    }
+                    .tag(AppTab.calendar)
 
-            CreateTabView()
-                .tabItem {
-                    Label(AppTab.create.title, systemImage: AppTab.create.icon)
-                }
-                .tag(AppTab.create)
+                CreateTabView()
+                    .tabItem {
+                        Label(AppTab.create.title, systemImage: AppTab.create.icon)
+                    }
+                    .tag(AppTab.create)
 
-            LibraryTabView()
-                .tabItem {
-                    Label(AppTab.library.title, systemImage: selectedTab == .library ? AppTab.library.selectedIcon : AppTab.library.icon)
-                }
-                .tag(AppTab.library)
+                LibraryTabView()
+                    .tabItem {
+                        Label(AppTab.library.title, systemImage: selectedTab == .library ? AppTab.library.selectedIcon : AppTab.library.icon)
+                    }
+                    .tag(AppTab.library)
 
-            ProfileTabView()
-                .tabItem {
-                    Label(AppTab.profile.title, systemImage: selectedTab == .profile ? AppTab.profile.selectedIcon : AppTab.profile.icon)
-                }
-                .tag(AppTab.profile)
+                ProfileTabView()
+                    .tabItem {
+                        Label(AppTab.profile.title, systemImage: selectedTab == .profile ? AppTab.profile.selectedIcon : AppTab.profile.icon)
+                    }
+                    .tag(AppTab.profile)
+            }
+            .tint(currentTheme.colors.accentPrimary)
+            // Glass effect for tab bar using SwiftUI material
+            .toolbarBackground(.ultraThinMaterial, for: .tabBar)
+            .toolbarBackground(.visible, for: .tabBar)
+
+            if !networkMonitor.isConnected {
+                OfflineBanner()
+            }
         }
-        .tint(currentTheme.colors.accentPrimary)
-        // Glass effect for tab bar using SwiftUI material
-        .toolbarBackground(.ultraThinMaterial, for: .tabBar)
-        .toolbarBackground(.visible, for: .tabBar)
     }
 }
 

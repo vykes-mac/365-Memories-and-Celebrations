@@ -289,7 +289,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   2. Adding/editing moments works offline
   3. Viewing attached media works offline
   4. Changes sync when network available (if sync enabled)
-- **passes:** false
+- **passes:** true
 
 ---
 

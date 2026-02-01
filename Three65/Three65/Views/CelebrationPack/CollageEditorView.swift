@@ -19,6 +19,7 @@ struct CollageEditorView: View {
     @State private var shareItems: [Any] = []
     @State private var showingCaptions = false
     @State private var pendingCaptionSuggestions = false
+    @State private var showConfetti = false
 
     var body: some View {
         ZStack {
@@ -54,6 +55,11 @@ struct CollageEditorView: View {
         .sheet(isPresented: $showingCaptions) {
             CaptionSuggestionsView()
                 .environmentObject(viewModel)
+        }
+        .overlay {
+            if showConfetti {
+                ConfettiBurstView()
+            }
         }
         .task {
             await loadPreviewImages()
@@ -142,6 +148,10 @@ struct CollageEditorView: View {
             AnalyticsService.shared.track("celebration_pack_exported")
 
             shareItems = exportURL.map { [$0] } ?? [renderedImage]
+            showConfetti = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                showConfetti = false
+            }
             pendingCaptionSuggestions = true
             showingShare = true
         }

@@ -55,6 +55,7 @@ struct NotificationSettingsView: View {
                 Toggle("Enable reminders", isOn: binding(
                     get: { setting.enabled },
                     set: { newValue in
+                        Haptics.light()
                         setting.enabled = newValue
                         setting.modifiedAt = Date()
                         saveChanges()
@@ -89,10 +90,11 @@ struct NotificationSettingsView: View {
                 ForEach(ReminderOffset.allCases, id: \.self) { offset in
                     Toggle(offset.displayName, isOn: binding(
                         get: { setting.offsets.contains(offset) },
-                        set: { isOn in
-                            var offsets = setting.offsets
-                            if isOn {
-                                offsets.insert(offset)
+                    set: { isOn in
+                        Haptics.light()
+                        var offsets = setting.offsets
+                        if isOn {
+                            offsets.insert(offset)
                             } else {
                                 offsets.remove(offset)
                             }
@@ -121,6 +123,7 @@ struct NotificationSettingsView: View {
                 Toggle("Silence notifications", isOn: binding(
                     get: { setting.quietHoursEnabled },
                     set: { isOn in
+                        Haptics.light()
                         setting.quietHoursEnabled = isOn
                         if isOn {
                             updateQuietHours(setting)
@@ -206,6 +209,9 @@ struct NotificationSettingsView: View {
 
     private func refreshSchedule(_ setting: ReminderSetting) async {
         await NotificationService.shared.scheduleReminders(for: moments, settings: setting)
+        if setting.enabled {
+            Haptics.success()
+        }
     }
 
     private func binding<T>(get: @escaping () -> T, set: @escaping (T) -> Void) -> Binding<T> {

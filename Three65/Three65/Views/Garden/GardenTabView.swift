@@ -108,7 +108,9 @@ struct GardenTabView: View {
 
     private func presentAddMoment(for date: Date) {
         addMomentDate = date
-        showingAddMoment = true
+        withAnimation(.spring(response: Duration.slow, dampingFraction: 0.85)) {
+            showingAddMoment = true
+        }
     }
 }
 

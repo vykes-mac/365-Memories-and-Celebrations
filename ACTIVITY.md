@@ -1,8 +1,8 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 15:43
-**Tasks Completed:** 14 / 18
+**Last Updated:** 2026-02-01 15:48
+**Tasks Completed:** 15 / 18
 **Current Task:** None (ready for next task)
 
 ---
@@ -30,6 +30,27 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-02-01 15:48
+**Completed:**
+- F6.1 - Animations & Haptics
+
+**Changes Made:**
+- Added confetti burst component and applied to saves, shares, and big anniversaries
+- Added haptics utility and wired light/medium/success feedback
+- Added upcoming event glow pulse and spring/ease transitions
+- Marked F6.1 as passing in PLAN.md
+
+**Status:**
+- Animations and haptics now align with design timing and reduce-motion support
+
+**Next:**
+- F6.2 - Accessibility
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-02-01 15:43
 **Completed:**

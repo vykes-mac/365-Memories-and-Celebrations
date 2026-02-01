@@ -252,13 +252,17 @@ struct OnboardingFlow: View {
             return
         }
         if let next = step.next {
-            step = next
+            withAnimation(.easeInOut(duration: Duration.base)) {
+                step = next
+            }
         }
     }
 
     private func previousStep() {
         if let previous = step.previous {
-            step = previous
+            withAnimation(.easeInOut(duration: Duration.base)) {
+                step = previous
+            }
         }
     }
 

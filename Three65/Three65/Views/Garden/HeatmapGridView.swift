@@ -12,6 +12,8 @@ struct HeatmapCell: View {
     let day: GardenDay
     let size: CGFloat
     let onTap: () -> Void
+    @State private var isGlowing = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         Button(action: onTap) {
@@ -25,10 +27,18 @@ struct HeatmapCell: View {
                         .strokeBorder(Theme.current.colors.accentPrimary, lineWidth: 2)
                     : nil
                 )
+                .shadow(color: glowColor, radius: isGlowing ? 6 : 2)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHint("Double tap to view day details")
+        .onAppear {
+            if day.isUpcoming && day.hasEvents && !reduceMotion {
+                withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
+                    isGlowing = true
+                }
+            }
+        }
     }
 
     // MARK: - Computed Properties
@@ -75,6 +85,11 @@ struct HeatmapCell: View {
         }
 
         return label
+    }
+
+    private var glowColor: Color {
+        guard day.isUpcoming && day.hasEvents else { return .clear }
+        return (day.primaryCategoryColor ?? Theme.current.colors.accentPrimary).opacity(isGlowing ? 0.5 : 0.2)
     }
 }
 

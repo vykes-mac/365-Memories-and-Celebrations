@@ -40,7 +40,11 @@ struct CreateTabView: View {
                         .frame(maxWidth: .infinity)
                     }
 
-                    Button(action: { showingCollageFlow = true }) {
+                    Button(action: {
+                        withAnimation(.spring(response: Duration.slow, dampingFraction: 0.85)) {
+                            showingCollageFlow = true
+                        }
+                    }) {
                         Text("Start a Collage")
                             .font(Typography.button)
                             .foregroundStyle(.white)

@@ -31,7 +31,11 @@ struct CreativeLibraryView: View {
                         .foregroundStyle(Theme.current.colors.textPrimary)
 
                     if projects.isEmpty {
-                        EmptyLibraryState(onCreate: { showingCollageFlow = true })
+                        EmptyLibraryState(onCreate: {
+                            withAnimation(.spring(response: Duration.slow, dampingFraction: 0.85)) {
+                                showingCollageFlow = true
+                            }
+                        })
                     } else {
                         LazyVGrid(columns: columns, spacing: Spacing.m) {
                             ForEach(projects, id: \.id) { project in

@@ -14,6 +14,8 @@ struct DayDetailSheet: View {
     let onDismiss: () -> Void
     let onAddMoment: (Date) -> Void
     @State private var showingCollageFlow = false
+    @State private var showConfetti = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -48,6 +50,18 @@ struct DayDetailSheet: View {
         .glassSheet(cornerRadius: Radius.l)
         .sheet(isPresented: $showingCollageFlow) {
             CollageFlowView(person: day.moments.first?.person, moment: day.moments.first)
+        }
+        .overlay {
+            if showConfetti {
+                ConfettiBurstView()
+            }
+        }
+        .onAppear {
+            guard hasBigAnniversary, !reduceMotion else { return }
+            showConfetti = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                showConfetti = false
+            }
         }
     }
 
@@ -224,6 +238,15 @@ struct DayDetailSheet: View {
         }
 
         return nil
+    }
+
+    private var hasBigAnniversary: Bool {
+        let calendar = Calendar.current
+        return day.moments.contains { moment in
+            guard moment.recurring else { return false }
+            let years = calendar.dateComponents([.year], from: moment.date, to: day.date).year ?? 0
+            return years >= 10 && years % 10 == 0
+        }
     }
 }
 

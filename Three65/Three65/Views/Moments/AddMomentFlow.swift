@@ -25,6 +25,8 @@ struct AddMomentFlow: View {
     @State private var notes: String = ""
     @State private var showingError: Bool = false
     @State private var errorMessage: String = ""
+    @State private var showConfetti = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     init(initialDate: Date = Date(), initialName: String? = nil, initialRelationship: String? = nil, onSave: (() -> Void)? = nil) {
         self.onSave = onSave
@@ -70,6 +72,11 @@ struct AddMomentFlow: View {
                 Button("OK", role: .cancel) {}
             } message: {
                 Text(errorMessage)
+            }
+        }
+        .overlay {
+            if showConfetti {
+                ConfettiBurstView()
             }
         }
     }
@@ -132,6 +139,9 @@ struct AddMomentFlow: View {
             Toggle("Repeats yearly", isOn: $isRecurring)
                 .font(Typography.body)
                 .tint(Theme.current.colors.accentPrimary)
+                .onChange(of: isRecurring) { _, _ in
+                    Haptics.light()
+                }
         }
     }
 
@@ -321,7 +331,15 @@ struct AddMomentFlow: View {
 
             AnalyticsService.shared.track("moment_created")
             onSave?()
-            dismiss()
+            Haptics.medium()
+            if !reduceMotion {
+                showConfetti = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                    dismiss()
+                }
+            } else {
+                dismiss()
+            }
         } catch {
             errorMessage = error.localizedDescription
             showingError = true

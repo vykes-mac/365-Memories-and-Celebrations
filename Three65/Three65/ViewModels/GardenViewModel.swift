@@ -154,12 +154,16 @@ final class GardenViewModel: BaseViewModel {
     /// Select a day to show details
     func selectDay(_ day: GardenDay) {
         selectedDay = day
-        showingDayDetail = true
+        withAnimation(.spring(response: Duration.slow, dampingFraction: 0.85)) {
+            showingDayDetail = true
+        }
     }
 
     /// Dismiss the day detail sheet
     func dismissDayDetail() {
-        showingDayDetail = false
+        withAnimation(.spring(response: Duration.slow, dampingFraction: 0.85)) {
+            showingDayDetail = false
+        }
         selectedDay = nil
     }
 

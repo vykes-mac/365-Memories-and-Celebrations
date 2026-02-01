@@ -14,6 +14,7 @@ struct DayDot: View {
     let onTap: () -> Void
 
     @State private var isPulsing = false
+    @State private var isGlowing = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -40,8 +41,10 @@ struct DayDot: View {
                 if day.isUpcoming && day.hasEvents {
                     Circle()
                         .fill(day.primaryCategoryColor?.opacity(0.3) ?? Theme.current.colors.accentPrimary.opacity(0.3))
-                        .frame(width: size + 4, height: size + 4)
-                        .blur(radius: 2)
+                        .frame(width: size + 6, height: size + 6)
+                        .blur(radius: isGlowing ? 4 : 2)
+                        .opacity(isGlowing ? 0.6 : 0.3)
+                        .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isGlowing)
                 }
 
                 // Today's pulse animation
@@ -57,6 +60,11 @@ struct DayDot: View {
             if day.isToday && !reduceMotion {
                 withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
                     isPulsing = true
+                }
+            }
+            if day.isUpcoming && day.hasEvents && !reduceMotion {
+                withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
+                    isGlowing = true
                 }
             }
         }

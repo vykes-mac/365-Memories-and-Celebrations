@@ -268,7 +268,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   4. Glow pulse on events within 7 days
   5. Haptics: light (toggles), medium (save), success (scheduled)
   6. Reduce Motion setting disables shimmer/confetti
-- **passes:** false
+- **passes:** true
 
 #### F6.2 - Accessibility
 - **Category:** Accessibility

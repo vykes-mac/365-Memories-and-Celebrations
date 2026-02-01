@@ -85,8 +85,9 @@ struct HeatmapGridView: View {
 
     // Grid configuration - matches dot grid columns
     private let columns = 19
-    private let cellSize: CGFloat = 14
-    private let spacing: CGFloat = 3
+    private let minCellSize: CGFloat = 6
+    private let maxCellSize: CGFloat = 10
+    private let spacing: CGFloat = 2
 
     var body: some View {
         GeometryReader { geometry in
@@ -115,8 +116,8 @@ struct HeatmapGridView: View {
     private func calculateCellSize(availableWidth: CGFloat) -> CGFloat {
         // Calculate cell size to fit nicely within available width
         let totalSpacing = CGFloat(columns - 1) * spacing
-        let maxCellSize = (availableWidth - totalSpacing) / CGFloat(columns)
-        return min(maxCellSize, cellSize)
+        let computedSize = (availableWidth - totalSpacing) / CGFloat(columns)
+        return min(max(computedSize, minCellSize), maxCellSize)
     }
 }
 

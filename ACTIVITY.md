@@ -1,7 +1,7 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 00:25
+**Last Updated:** 2026-02-01 00:30
 **Tasks Completed:** 6 / 18
 **Current Task:** None (ready for next task)
 
@@ -30,6 +30,25 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-02-01 00:30
+**Completed:**
+- F2.2 - 365 Garden View (Heatmap Mode) sizing refinement
+
+**Changes Made:**
+- Adjusted HeatmapGridView cell sizing to clamp between 6-10pt and tightened spacing
+
+**Status:**
+- Heatmap cells now adhere to 6-10pt spec across device widths
+- Existing F2.2 verification steps still pass
+
+**Next:**
+- F2.3 - Day Details Sheet
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-02-01 00:25
 **Completed:**

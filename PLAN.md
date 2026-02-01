@@ -92,7 +92,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   2. Heatmap cells are rounded squares (6-10pt)
   3. Intensity varies based on number of moments (1-4+)
   4. Tap behavior matches Dot mode
-- **passes:** false
+- **passes:** true
 
 #### F2.3 - Day Details Sheet
 - **Category:** Garden

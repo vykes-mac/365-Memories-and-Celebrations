@@ -1,9 +1,9 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** Not started
-**Tasks Completed:** 0 / 18
-**Current Task:** None
+**Last Updated:** 2026-01-31 22:55
+**Tasks Completed:** 1 / 18
+**Current Task:** F1.2 - Design System Implementation
 
 ---
 
@@ -31,5 +31,25 @@ After completing each task, add an entry below in this format:
 ---
 -->
 
-### [Awaiting first session]
-No work completed yet. Start with task: "F1.1 - Project Structure & Architecture"
+### 2026-01-31 22:55
+**Completed:**
+- F1.1 - Project Structure & Architecture
+
+**Changes Made:**
+- Created MVVM folder structure: Models, Views, ViewModels, Services, Utilities, Resources
+- Created Three65/Three65/ViewModels/BaseViewModel.swift (ViewModelProtocol, BaseViewModel class)
+- Created Three65/Three65/Services/BaseService.swift (ServiceProtocol, BaseService, ServiceError, ServiceResult)
+- Added .gitkeep files to empty directories
+
+**Status:**
+- Project builds without warnings
+- All tests pass
+- PR #1 merged to main
+
+**Next:**
+- F1.2 - Design System Implementation
+
+**Blockers:**
+- None
+
+---

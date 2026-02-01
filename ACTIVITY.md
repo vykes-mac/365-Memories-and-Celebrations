@@ -1,7 +1,7 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 00:52
+**Last Updated:** 2026-02-01 00:53
 **Tasks Completed:** 6 / 18
 **Current Task:** None (ready for next task)
 
@@ -144,6 +144,25 @@ After completing each task, add an entry below in this format:
 
 **Status:**
 - All 5 verification steps pass
+
+**Next:**
+- F3.1 - Media Attachment
+
+**Blockers:**
+- None
+
+---
+
+### 2026-02-01 00:53
+**Completed:**
+- F2.5 branch sync (push + PR merge)
+
+**Changes Made:**
+- Pushed `feature/f2.5-person-management` to origin
+- Created and merged PR #9
+
+**Status:**
+- F2.5 fully merged to main
 
 **Next:**
 - F3.1 - Media Attachment

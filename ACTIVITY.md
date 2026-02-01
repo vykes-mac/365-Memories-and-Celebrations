@@ -1,7 +1,7 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 00:48
+**Last Updated:** 2026-02-01 00:52
 **Tasks Completed:** 6 / 18
 **Current Task:** None (ready for next task)
 
@@ -126,6 +126,27 @@ After completing each task, add an entry below in this format:
 
 **Next:**
 - F2.5 - Person Management
+
+**Blockers:**
+- None
+
+---
+
+### 2026-02-01 00:52
+**Completed:**
+- F2.5 - Person Management
+
+**Changes Made:**
+- Added person cards with avatar, relationship, and upcoming moment chips
+- Built person detail view with edit fields, avatar picker, and delete confirmation
+- Updated Profile tab to list people and link to detail view
+- Marked F2.5 as passing in PLAN.md
+
+**Status:**
+- All 5 verification steps pass
+
+**Next:**
+- F3.1 - Media Attachment
 
 **Blockers:**
 - None

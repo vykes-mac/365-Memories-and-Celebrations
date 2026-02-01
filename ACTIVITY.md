@@ -1,8 +1,8 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 00:15
-**Tasks Completed:** 5 / 18
+**Last Updated:** 2026-02-01 00:25
+**Tasks Completed:** 6 / 18
 **Current Task:** None (ready for next task)
 
 ---
@@ -30,6 +30,29 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-02-01 00:25
+**Completed:**
+- F2.2 - 365 Garden View (Heatmap Mode)
+
+**Changes Made:**
+- Created HeatmapGridView.swift (HeatmapCell, HeatmapGridView with LazyVGrid)
+- Updated GardenTabView.swift (added DisplayModeToggle, conditional view rendering)
+
+**Status:**
+- All 4 verification steps pass
+- Toggle switches between Dot and Heatmap modes
+- Heatmap cells are rounded squares with intensity based on moment count
+- Tap behavior matches Dot mode
+- Project builds without warnings
+
+**Next:**
+- F2.3 - Day Details Sheet
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-02-01 00:15
 **Completed:**

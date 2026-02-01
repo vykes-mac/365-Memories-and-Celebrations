@@ -17,6 +17,8 @@ struct CollageEditorView: View {
     @State private var exportFormat: CollageExportFormat = .square
     @State private var showingShare = false
     @State private var shareItems: [Any] = []
+    @State private var showingCaptions = false
+    @State private var pendingCaptionSuggestions = false
 
     var body: some View {
         ZStack {
@@ -46,8 +48,12 @@ struct CollageEditorView: View {
         }
         .navigationTitle("Collage")
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showingShare) {
+        .sheet(isPresented: $showingShare, onDismiss: handleShareDismiss) {
             ShareSheet(activityItems: shareItems)
+        }
+        .sheet(isPresented: $showingCaptions) {
+            CaptionSuggestionsView()
+                .environmentObject(viewModel)
         }
         .task {
             await loadPreviewImages()
@@ -136,6 +142,7 @@ struct CollageEditorView: View {
             AnalyticsService.shared.track("celebration_pack_exported")
 
             shareItems = exportURL.map { [$0] } ?? [renderedImage]
+            pendingCaptionSuggestions = true
             showingShare = true
         }
     }
@@ -176,6 +183,12 @@ struct CollageEditorView: View {
             viewModel.errorMessage = "Failed to save export: \(error.localizedDescription)"
             return nil
         }
+    }
+
+    private func handleShareDismiss() {
+        guard pendingCaptionSuggestions else { return }
+        pendingCaptionSuggestions = false
+        showingCaptions = true
     }
 }
 

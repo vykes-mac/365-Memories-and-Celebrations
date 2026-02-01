@@ -172,7 +172,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   3. Multiple caption options provided (3+)
   4. Tap to copy caption to clipboard
   5. Analytics event `caption_copied` fires on copy
-- **passes:** false
+- **passes:** true
 
 #### F3.4 - Creative Library
 - **Category:** Library

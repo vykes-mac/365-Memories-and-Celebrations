@@ -1,8 +1,8 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 15:21
-**Tasks Completed:** 7 / 18
+**Last Updated:** 2026-02-01 15:24
+**Tasks Completed:** 8 / 18
 **Current Task:** None (ready for next task)
 
 ---
@@ -30,6 +30,28 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-02-01 15:24
+**Completed:**
+- F3.3 - Caption Suggestions
+
+**Changes Made:**
+- Added caption suggestion generator with template placeholders
+- Added caption suggestions view with copy-to-clipboard and analytics tracking
+- Wired caption suggestions to appear after collage export
+- Marked F3.3 as passing in PLAN.md
+
+**Status:**
+- Caption suggestions show after export with {Name}/{Age}/{Relationship} substitutions
+- Copy action fires `caption_copied` analytics event
+
+**Next:**
+- F3.4 - Creative Library
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-02-01 15:21
 **Completed:**

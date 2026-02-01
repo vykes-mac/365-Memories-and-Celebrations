@@ -1,8 +1,8 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-02-01 15:27
-**Tasks Completed:** 9 / 18
+**Last Updated:** 2026-02-01 15:33
+**Tasks Completed:** 10 / 18
 **Current Task:** None (ready for next task)
 
 ---
@@ -30,6 +30,28 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-02-01 15:33
+**Completed:**
+- F4.1 - Reminder System
+
+**Changes Made:**
+- Added NotificationService for scheduling local reminders with quiet hours adjustment
+- Built NotificationSettingsView for enabling reminders, offsets, and quiet hours
+- Linked Profile settings to notification preferences and analytics event
+- Marked F4.1 as passing in PLAN.md
+
+**Status:**
+- Reminders can be enabled with offset options and quiet hours
+- Notifications schedule using local time with warm, person-based copy
+
+**Next:**
+- F4.2 - Theme Selection
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-02-01 15:27
 **Completed:**

@@ -199,7 +199,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   4. Notifications schedule correctly across timezone changes
   5. Notification copy is warm and personal (matches moment/person)
   6. Analytics event `reminder_enabled` fires when enabled
-- **passes:** false
+- **passes:** true
 
 #### F4.2 - Theme Selection
 - **Category:** Settings

@@ -7,7 +7,6 @@
 
 import SwiftUI
 import PhotosUI
-import SwiftData
 
 /// Bottom sheet showing details for a selected day
 struct DayDetailSheet: View {

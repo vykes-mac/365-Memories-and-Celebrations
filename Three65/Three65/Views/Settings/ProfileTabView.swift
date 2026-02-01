@@ -26,6 +26,7 @@ struct ProfileTabView: View {
                 ScrollView {
                     VStack(spacing: Spacing.m) {
                         headerCard
+                        settingsSection
 
                         if people.isEmpty {
                             emptyState
@@ -85,6 +86,58 @@ struct ProfileTabView: View {
                     .foregroundStyle(Theme.current.colors.textSecondary)
             }
             .frame(maxWidth: .infinity)
+        }
+    }
+
+    private var settingsSection: some View {
+        VStack(alignment: .leading, spacing: Spacing.s) {
+            Text("Settings")
+                .font(Typography.Title.medium)
+                .foregroundStyle(Theme.current.colors.textPrimary)
+
+            NavigationLink {
+                NotificationSettingsView()
+            } label: {
+                SettingsRow(
+                    title: "Reminders",
+                    subtitle: "Upcoming moments and quiet hours",
+                    systemImage: "bell.badge"
+                )
+            }
+            .buttonStyle(.plain)
+        }
+    }
+}
+
+private struct SettingsRow: View {
+    let title: String
+    let subtitle: String
+    let systemImage: String
+
+    var body: some View {
+        GlassCard {
+            HStack(spacing: Spacing.m) {
+                Image(systemName: systemImage)
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(Theme.current.colors.accentPrimary)
+
+                VStack(alignment: .leading, spacing: Spacing.xxs) {
+                    Text(title)
+                        .font(Typography.body)
+                        .foregroundStyle(Theme.current.colors.textPrimary)
+
+                    Text(subtitle)
+                        .font(Typography.caption)
+                        .foregroundStyle(Theme.current.colors.textSecondary)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(Theme.current.colors.textTertiary)
+            }
+            .padding(Spacing.s)
         }
     }
 }

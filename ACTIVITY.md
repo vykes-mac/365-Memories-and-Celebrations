@@ -1,9 +1,9 @@
 # 365: Memories & Celebrations - Activity Log
 
 ## Current Status
-**Last Updated:** 2026-01-31 23:55
-**Tasks Completed:** 4 / 18
-**Current Task:** F2.1 - 365 Garden View (Dot Mode)
+**Last Updated:** 2026-02-01 00:15
+**Tasks Completed:** 5 / 18
+**Current Task:** None (ready for next task)
 
 ---
 
@@ -30,6 +30,35 @@ After completing each task, add an entry below in this format:
 
 ---
 -->
+
+### 2026-02-01 00:15
+**Completed:**
+- F2.1 - 365 Garden View (Dot Mode)
+
+**Changes Made:**
+- Created GardenViewModel.swift (selectedYear, days, selectDay, year navigation)
+- Created DotGridView.swift (DayDot, DotGridView with LazyVGrid)
+- Created YearSwitcher.swift (year navigation UI)
+- Created DayDetailSheet.swift (placeholder sheet for F2.3)
+- Updated GardenTabView.swift (integrated all components)
+
+**Status:**
+- All 7 verification steps pass
+- Grid displays 365 dots with category-colored rings for events
+- Multi-event days show stacked micro-dots
+- Today's dot has pulse animation (respects Reduce Motion)
+- Year switcher allows navigating between years
+- Tapping a dot shows day detail sheet
+- Uses LazyVGrid for 60fps performance
+- Project builds without warnings
+
+**Next:**
+- F2.2 - 365 Garden View (Heatmap Mode)
+
+**Blockers:**
+- None
+
+---
 
 ### 2026-01-31 23:55
 **Completed:**

@@ -105,7 +105,7 @@ Each feature includes verification steps. **Do not remove or edit existing verif
   5. Media preview strip shows attached photos/videos
   6. "Create Celebration Pack" CTA is visible
   7. "Add moment" option available for empty days
-- **passes:** false
+- **passes:** true
 
 #### F2.4 - Add Moment Flow
 - **Category:** Moments

@@ -11,13 +11,17 @@ import AVKit
 struct OnboardingFlow: View {
     let onComplete: () -> Void
 
-    @State private var step: Step = .welcome
+    @State private var step: Step = .painPoint
     @State private var didTrackStart = false
     @State private var showingAddMoment = false
     @State private var showingContactsImport = false
     @State private var showingCalendarImport = false
     @State private var prefillName: String = ""
     @State private var prefillRelationship: String = ""
+    @State private var selectedIdentities: Set<String> = []
+    @State private var importedUpcomingDates: [UpcomingDate] = []
+    @State private var hasImportedContacts = false
+    @State private var firstMomentPersonName: String = "Mom"
     @AppStorage("selectedTheme") private var selectedTheme: String = Theme.softBlush.rawValue
 
     var body: some View {
@@ -29,10 +33,13 @@ struct OnboardingFlow: View {
             )
             .ignoresSafeArea()
 
-            if step == .welcome {
-                welcomeStep
+            if step.isFullScreen {
+                fullScreenStep
             } else {
                 VStack(spacing: Spacing.l) {
+                    // Progress indicator
+                    progressIndicator
+
                     header
 
                     ScrollView {
@@ -53,7 +60,7 @@ struct OnboardingFlow: View {
             AddMomentFlow(initialDate: Date(), initialName: prefillName, initialRelationship: prefillRelationship)
         }
         .sheet(isPresented: $showingContactsImport) {
-            ContactsImportView()
+            ContactsImportView(onImportComplete: handleContactsImport)
         }
         .alert("Calendar import is coming soon.", isPresented: $showingCalendarImport) {
             Button("OK", role: .cancel) {}
@@ -64,6 +71,97 @@ struct OnboardingFlow: View {
                 AnalyticsService.shared.track("onboarding_started")
             }
         }
+    }
+
+    // MARK: - Progress Indicator
+
+    private var progressIndicator: some View {
+        let totalSteps = visibleSteps.count
+        let currentIndex = getCurrentStepIndex()
+
+        return HStack(spacing: 4) {
+            ForEach(0..<totalSteps, id: \.self) { index in
+                Capsule()
+                    .fill(index <= currentIndex ? Theme.current.colors.accentPrimary : Theme.current.colors.textTertiary.opacity(0.3))
+                    .frame(height: 3)
+            }
+        }
+        .frame(maxWidth: 200)
+    }
+
+    private var visibleSteps: [Step] {
+        Step.allCases.filter { !$0.isConditional || (hasImportedContacts && $0 == .personalizedFOMO) }
+    }
+
+    private func getCurrentStepIndex() -> Int {
+        visibleSteps.firstIndex(of: step) ?? 0
+    }
+
+    // MARK: - Full Screen Steps
+
+    @ViewBuilder
+    private var fullScreenStep: some View {
+        switch step {
+        case .painPoint:
+            VStack {
+                PainPointScreen()
+                Spacer()
+                fullScreenContinueButton
+            }
+        case .welcome:
+            welcomeStep
+        case .valuePreview:
+            VStack {
+                ValuePreviewScreen()
+                Spacer()
+                fullScreenContinueButton
+            }
+        case .socialProof:
+            VStack {
+                SocialProofScreen()
+                Spacer()
+                fullScreenContinueButton
+            }
+        case .quickWin:
+            VStack {
+                QuickWinScreen(personName: firstMomentPersonName)
+                Spacer()
+                fullScreenContinueButton
+            }
+        case .premium:
+            PremiumTeaserScreen(
+                onStartTrial: {
+                    AnalyticsService.shared.track("premium_trial_started")
+                    onComplete()
+                },
+                onMaybeLater: {
+                    onComplete()
+                }
+            )
+        default:
+            EmptyView()
+        }
+    }
+
+    private var fullScreenContinueButton: some View {
+        Button(action: nextStep) {
+            HStack(spacing: Spacing.xs) {
+                Text("Continue")
+                    .font(Typography.button)
+
+                Image(systemName: "arrow.right")
+                    .font(.system(size: 14, weight: .semibold))
+            }
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, Spacing.m)
+            .background(
+                RoundedRectangle(cornerRadius: Radius.xl)
+                    .fill(Theme.current.colors.accentPrimary)
+            )
+        }
+        .padding(.horizontal, Spacing.xxl)
+        .padding(.bottom, Spacing.xl)
     }
 
     private var header: some View {
@@ -82,14 +180,20 @@ struct OnboardingFlow: View {
     @ViewBuilder
     private var stepContent: some View {
         switch step {
-        case .welcome:
-            welcomeStep
+        case .painPoint, .welcome, .valuePreview, .socialProof, .quickWin, .premium:
+            EmptyView() // Handled by fullScreenStep
         case .imports:
             importStep
+        case .personalizedFOMO:
+            PersonalizedFOMOScreen(upcomingDates: importedUpcomingDates.isEmpty ? PersonalizedFOMOScreen.sampleDates : importedUpcomingDates)
         case .theme:
             themeStep
+        case .identity:
+            IdentityCommitmentScreen(selectedIdentities: $selectedIdentities)
         case .moments:
             momentStep
+        case .features:
+            FeatureBenefitsScreen()
         case .notifications:
             notificationsStep
         }
@@ -272,7 +376,7 @@ struct OnboardingFlow: View {
                 .font(Typography.Title.medium)
                 .foregroundStyle(Theme.current.colors.textPrimary)
 
-            Text("We’ll send gentle reminders so you can plan something thoughtful.")
+            Text("We'll send gentle reminders so you can plan something thoughtful.")
                 .font(Typography.body)
                 .foregroundStyle(Theme.current.colors.textSecondary)
 
@@ -303,8 +407,8 @@ struct OnboardingFlow: View {
                             .fill(Theme.current.colors.glassCardFill)
                     )
             }
-            .disabled(step == .welcome)
-            .opacity(step == .welcome ? 0.5 : 1)
+            .disabled(!step.canGoBack)
+            .opacity(step.canGoBack ? 1 : 0.5)
 
             Button(action: nextStep) {
                 Text(step == .notifications ? "Finish" : "Next")
@@ -320,12 +424,38 @@ struct OnboardingFlow: View {
         }
     }
 
+    // MARK: - Actions
+
     private func nextStep() {
+        // Handle step completion
         if step == .notifications {
+            // Go to premium teaser instead of completing
+            withAnimation(.easeInOut(duration: Duration.base)) {
+                step = .premium
+            }
+            return
+        }
+
+        if step == .premium {
             onComplete()
             return
         }
-        if let next = step.next {
+
+        // Find next step, skipping conditional steps if needed
+        var nextStepCandidate = step.next
+        while let candidate = nextStepCandidate {
+            if candidate.isConditional {
+                if candidate == .personalizedFOMO && hasImportedContacts {
+                    break // Show FOMO screen if contacts were imported
+                }
+                // Skip conditional step
+                nextStepCandidate = candidate.next
+            } else {
+                break
+            }
+        }
+
+        if let next = nextStepCandidate {
             withAnimation(.easeInOut(duration: Duration.base)) {
                 step = next
             }
@@ -333,7 +463,16 @@ struct OnboardingFlow: View {
     }
 
     private func previousStep() {
-        if let previous = step.previous {
+        var prevStepCandidate = step.previous
+        while let candidate = prevStepCandidate {
+            if candidate.isConditional && !(candidate == .personalizedFOMO && hasImportedContacts) {
+                prevStepCandidate = candidate.previous
+            } else {
+                break
+            }
+        }
+
+        if let previous = prevStepCandidate {
             withAnimation(.easeInOut(duration: Duration.base)) {
                 step = previous
             }
@@ -349,6 +488,7 @@ struct OnboardingFlow: View {
     private func openAddMoment(name: String, relationship: String) {
         prefillName = name
         prefillRelationship = relationship
+        firstMomentPersonName = name
         showingAddMoment = true
     }
 
@@ -357,7 +497,15 @@ struct OnboardingFlow: View {
             _ = await NotificationService.shared.requestAuthorization()
         }
     }
+
+    private func handleContactsImport(dates: [UpcomingDate]) {
+        hasImportedContacts = true
+        importedUpcomingDates = dates
+        AnalyticsService.shared.track("contacts_imported", properties: ["count": dates.count])
+    }
 }
+
+// MARK: - Supporting Views
 
 private struct OnboardingActionCard: View {
     let title: String
@@ -498,31 +646,74 @@ private struct ThemeSelectionCard: View {
     }
 }
 
+// MARK: - Step Enum
+
 private enum Step: Int, CaseIterable {
+    case painPoint
     case welcome
+    case valuePreview
+    case socialProof
     case imports
+    case personalizedFOMO
     case theme
+    case identity
     case moments
+    case quickWin
+    case features
     case notifications
+    case premium
 
     var title: String {
         switch self {
+        case .painPoint: return ""
         case .welcome: return "Welcome"
+        case .valuePreview: return ""
+        case .socialProof: return ""
         case .imports: return "Import"
+        case .personalizedFOMO: return "Coming Up"
         case .theme: return "Theme"
+        case .identity: return "Your Goals"
         case .moments: return "First moments"
+        case .quickWin: return ""
+        case .features: return "Features"
         case .notifications: return "Notifications"
+        case .premium: return ""
         }
     }
 
     var subtitle: String {
         switch self {
+        case .painPoint: return ""
         case .welcome: return "A gentle start"
+        case .valuePreview: return ""
+        case .socialProof: return ""
         case .imports: return "Optional quick setup"
+        case .personalizedFOMO: return "Don't miss these dates"
         case .theme: return "Make it yours"
+        case .identity: return "What matters to you"
         case .moments: return "Add three meaningful people"
+        case .quickWin: return ""
+        case .features: return "What you get"
         case .notifications: return "Stay on track"
+        case .premium: return ""
         }
+    }
+
+    var isFullScreen: Bool {
+        switch self {
+        case .painPoint, .welcome, .valuePreview, .socialProof, .quickWin, .premium:
+            return true
+        default:
+            return false
+        }
+    }
+
+    var isConditional: Bool {
+        self == .personalizedFOMO
+    }
+
+    var canGoBack: Bool {
+        self != .painPoint
     }
 
     var next: Step? { Step(rawValue: rawValue + 1) }

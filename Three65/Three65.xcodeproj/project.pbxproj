@@ -29,9 +29,22 @@
 		159D09A02F2EC22D0085E35F /* Three65UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Three65UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		156A86252F3035D7001B44F7 /* Exceptions for "Three65" folder in "Three65" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 159D09882F2EC22B0085E35F /* Three65 */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		159D098B2F2EC22B0085E35F /* Three65 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				156A86252F3035D7001B44F7 /* Exceptions for "Three65" folder in "Three65" target */,
+			);
 			path = Three65;
 			sourceTree = "<group>";
 		};
@@ -400,6 +413,7 @@
 				DEVELOPMENT_TEAM = 4A7H788X5U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Three65/Info.plist;
 				INFOPLIST_KEY_NSContactsUsageDescription = "The app request contacts so that important birthdays can be easily imported from users contact list.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -433,6 +447,7 @@
 				DEVELOPMENT_TEAM = 4A7H788X5U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Three65/Info.plist;
 				INFOPLIST_KEY_NSContactsUsageDescription = "The app request contacts so that important birthdays can be easily imported from users contact list.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

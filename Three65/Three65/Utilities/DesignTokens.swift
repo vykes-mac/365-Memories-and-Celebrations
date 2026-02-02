@@ -10,22 +10,22 @@ import SwiftUI
 // MARK: - Typography
 
 /// Typography styles following the design system
-/// Uses New York (Display) + SF Pro (Text) pairing
+/// Uses Playfair Display (Display/Title) + SF Pro (Text) pairing
 enum Typography {
-    /// Display styles for hero and screen titles (serif)
+    /// Display styles for hero and screen titles (Playfair Display)
     enum Display {
         /// 34-36pt hero titles
-        static let large = Font.system(.largeTitle, design: .serif).weight(.bold)
+        static let large = Font.custom("PlayfairDisplay-Bold", size: 34)
         /// 28-30pt screen titles
-        static let medium = Font.system(.title, design: .serif).weight(.semibold)
+        static let medium = Font.custom("PlayfairDisplay-SemiBold", size: 28)
     }
 
-    /// Title styles for sections and cards (serif)
+    /// Title styles for sections and cards (Playfair Display)
     enum Title {
         /// 22-24pt section titles
-        static let large = Font.system(.title2, design: .serif).weight(.semibold)
+        static let large = Font.custom("PlayfairDisplay-SemiBold", size: 22)
         /// 18-20pt card titles
-        static let medium = Font.system(.title3, design: .serif).weight(.medium)
+        static let medium = Font.custom("PlayfairDisplay-Medium", size: 18)
     }
 
     /// Body text (sans-serif)

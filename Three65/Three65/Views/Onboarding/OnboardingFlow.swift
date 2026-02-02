@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct OnboardingFlow: View {
     let onComplete: () -> Void
@@ -28,21 +29,25 @@ struct OnboardingFlow: View {
             )
             .ignoresSafeArea()
 
-            VStack(spacing: Spacing.l) {
-                header
+            if step == .welcome {
+                welcomeStep
+            } else {
+                VStack(spacing: Spacing.l) {
+                    header
 
-                ScrollView {
-                    VStack(alignment: .leading, spacing: Spacing.l) {
-                        stepContent
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: Spacing.l) {
+                            stepContent
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                }
 
-                navigationControls
+                    navigationControls
+                }
+                .padding(Spacing.screenHorizontal)
+                .padding(.top, Spacing.l)
+                .padding(.bottom, Spacing.xl)
             }
-            .padding(Spacing.screenHorizontal)
-            .padding(.top, Spacing.l)
-            .padding(.bottom, Spacing.xl)
         }
         .sheet(isPresented: $showingAddMoment) {
             AddMomentFlow(initialDate: Date(), initialName: prefillName, initialRelationship: prefillRelationship)
@@ -91,17 +96,86 @@ struct OnboardingFlow: View {
     }
 
     private var welcomeStep: some View {
-        GlassCard {
-            VStack(alignment: .leading, spacing: Spacing.s) {
-                Text("A year of the people you love")
-                    .font(Typography.Display.medium)
-                    .foregroundStyle(Theme.current.colors.textPrimary)
+        VStack(spacing: 0) {
+            Spacer()
+                .frame(height: 60)
 
-                Text("Capture birthdays, anniversaries, and quiet moments that matter.")
-                    .font(Typography.body)
-                    .foregroundStyle(Theme.current.colors.textSecondary)
+            // Hero title
+            Text("A year of the people\nyou love.")
+                .font(Typography.Display.large)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(Theme.current.colors.textPrimary)
+                .padding(.horizontal, Spacing.screenHorizontal)
+
+            Spacer()
+                .frame(height: 40)
+
+            // Hero video with heart badge
+            ZStack(alignment: .bottomTrailing) {
+                HeroVideoView()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 340)
+                    .clipShape(RoundedRectangle(cornerRadius: Radius.xl))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: Radius.l)
+                            .stroke(
+                                LinearGradient(
+                                    colors: [
+                                        Theme.current.colors.bgGradientA,
+                                        Theme.current.colors.bgGradientB
+                                    ],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                ),
+                                lineWidth: 20
+                            )
+                            .blur(radius: 10)
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: Radius.l))
+
+                // Heart badge
+                ZStack {
+                    RoundedRectangle(cornerRadius: Radius.l)
+                        .fill(.thinMaterial)
+                        .frame(width: 72, height: 72)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Radius.l)
+                                .fill(.white.opacity(0.3))
+                        )
+
+                    Image(systemName: "heart.fill")
+                        .font(.system(size: 28))
+                        .foregroundStyle(Color(red: 0.6, green: 0.4, blue: 0.8))
+                }
+                .rotationEffect(.degrees(-8))
+                .offset(x: -8, y: 20)
             }
-            .padding(Spacing.m)
+            .padding(.horizontal, Spacing.screenHorizontal)
+
+            Spacer()
+
+            // Start button
+            Button(action: nextStep) {
+                HStack(spacing: Spacing.xs) {
+                    Text("Start my 365")
+                        .font(Typography.button)
+
+                    Image(systemName: "arrow.right")
+                        .font(.system(size: 14, weight: .semibold))
+                }
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, Spacing.m)
+                .background(
+                    RoundedRectangle(cornerRadius: Radius.xl)
+                        .fill(Color(red: 0.2, green: 0.15, blue: 0.25))
+                )
+            }
+            .padding(.horizontal, Spacing.xxl)
+
+            Spacer()
+                .frame(height: Spacing.xl)
         }
     }
 
@@ -311,6 +385,72 @@ private struct OnboardingActionCard: View {
             }
             .padding(Spacing.s)
         }
+    }
+}
+
+private struct HeroVideoView: View {
+    @State private var player = AVPlayer()
+    @State private var isConfigured = false
+
+    var body: some View {
+        PlayerLayerView(player: player)
+            .onAppear {
+                configureIfNeeded()
+                player.play()
+            }
+            .onDisappear {
+                player.pause()
+            }
+            .onReceive(NotificationCenter.default.publisher(
+                for: .AVPlayerItemDidPlayToEndTime,
+                object: player.currentItem
+            )) { _ in
+                player.seek(to: .zero)
+                player.play()
+            }
+            .allowsHitTesting(false)
+    }
+
+    private func configureIfNeeded() {
+        guard !isConfigured else { return }
+        isConfigured = true
+
+        guard let item = makePlayerItem() else { return }
+        player.replaceCurrentItem(with: item)
+        player.isMuted = true
+        player.actionAtItemEnd = .none
+    }
+
+    private func makePlayerItem() -> AVPlayerItem? {
+        guard let url = Bundle.main.url(forResource: "together", withExtension: "mp4") else {
+            return nil
+        }
+        return AVPlayerItem(url: url)
+    }
+}
+
+private struct PlayerLayerView: UIViewRepresentable {
+    let player: AVPlayer
+
+    func makeUIView(context: Context) -> PlayerContainerView {
+        let view = PlayerContainerView()
+        view.playerLayer.player = player
+        view.playerLayer.videoGravity = .resizeAspectFill
+        view.clipsToBounds = true
+        return view
+    }
+
+    func updateUIView(_ uiView: PlayerContainerView, context: Context) {
+        uiView.playerLayer.player = player
+        uiView.playerLayer.videoGravity = .resizeAspectFill
+    }
+}
+
+private final class PlayerContainerView: UIView {
+    override class var layerClass: AnyClass { AVPlayerLayer.self }
+
+    var playerLayer: AVPlayerLayer {
+        layer as? AVPlayerLayer ?? AVPlayerLayer()
     }
 }
 

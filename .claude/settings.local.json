@@ -1,12 +1,5 @@
 {
   "permissions": {
-    "deny": [
-      "Bash(sudo *)",
-      "Bash(docker *)",
-      "Bash(docker-compose *)",
-      "Read(./.env)",
-      "Read(./.env.*)"
-    ],
     "allow": [
       "WebFetch(domain:www.anthropic.com)",
       "WebFetch(domain:*)",
@@ -14,7 +7,15 @@
       "Bash(curl:*)",
       "Bash(git:*)",
       "Bash(xcodebuild *)",
-      "Bash(gh *)"
+      "Bash(gh *)",
+      "WebSearch"
+    ],
+    "deny": [
+      "Bash(sudo *)",
+      "Bash(docker *)",
+      "Bash(docker-compose *)",
+      "Read(./.env)",
+      "Read(./.env.*)"
     ]
   },
   "sandbox": {

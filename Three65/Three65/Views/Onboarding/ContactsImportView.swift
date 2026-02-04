@@ -13,6 +13,8 @@ struct ContactsImportView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
 
+    var onImportComplete: (([UpcomingDate]) -> Void)?
+
     @State private var contacts: [BirthdayContact] = []
     @State private var selected: Set<String> = []
     @State private var isLoading = false
@@ -176,7 +178,7 @@ struct ContactsImportView: View {
 
     private func importSelected() {
         let calendar = Calendar.current
-        var importedCount = 0
+        var importedDates: [UpcomingDate] = []
 
         for contact in contacts where selected.contains(contact.id) {
             guard let date = calendar.date(from: normalizedBirthday(contact.birthday)) else { continue }
@@ -191,14 +193,49 @@ struct ContactsImportView: View {
             )
             moment.person = person
             modelContext.insert(moment)
-            importedCount += 1
+
+            // Calculate days until this date for FOMO screen
+            let daysAway = daysUntil(date)
+            if daysAway >= 0 {
+                importedDates.append(UpcomingDate(
+                    name: contact.name,
+                    event: "Birthday",
+                    daysAway: daysAway,
+                    category: .birthday
+                ))
+            }
         }
 
         do {
             try modelContext.save()
+            // Sort by days away and call completion handler
+            let sortedDates = importedDates.sorted { $0.daysAway < $1.daysAway }
+            onImportComplete?(sortedDates)
             dismiss()
         } catch {
             errorMessage = "Failed to save imported contacts."
+        }
+    }
+
+    private func daysUntil(_ date: Date) -> Int {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+
+        // Get this year's occurrence
+        var components = calendar.dateComponents([.month, .day], from: date)
+        components.year = calendar.component(.year, from: today)
+
+        guard let thisYearDate = calendar.date(from: components) else { return 365 }
+
+        let thisYearStart = calendar.startOfDay(for: thisYearDate)
+
+        if thisYearStart >= today {
+            return calendar.dateComponents([.day], from: today, to: thisYearStart).day ?? 365
+        } else {
+            // Next year's occurrence
+            components.year = calendar.component(.year, from: today) + 1
+            guard let nextYearDate = calendar.date(from: components) else { return 365 }
+            return calendar.dateComponents([.day], from: today, to: nextYearDate).day ?? 365
         }
     }
 
@@ -244,6 +281,6 @@ struct ContactsImportView: View {
 }
 
 #Preview {
-    ContactsImportView()
+    ContactsImportView(onImportComplete: nil)
         .modelContainer(for: [Person.self, Moment.self, Category.self, Media.self, CollageProject.self, ReminderSetting.self], inMemory: true)
 }
